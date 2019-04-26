@@ -29,8 +29,8 @@ Game::Game()
     gBackground.createBackground(R"(\Content\Graphics\bg_galaxy.jpg)", sf::Vector2f(1, 1));
     
     //Create stars
-    uint32_t galaxySize = static_cast<uint32_t>(1e3);
-    ManagerM::getInstance().getStarManager().createStarGalaxy(static_cast<uint32_t>(3e5), galaxySize, true);
+    uint32_t galaxySize = static_cast<uint32_t>(1e5);
+    ManagerM::getInstance().getStarManager().createStarGalaxy(static_cast<uint32_t>(1e6), galaxySize, true);
     //load star texture once
     stars_Texture = &TextureHolder::GetTexture(
             Utility::GetWorkingDirectory() + R"(\Content\Graphics\template_planet.png)");

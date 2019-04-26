@@ -248,7 +248,7 @@ void StarManager::randomizeStarGalaxy(std::mt19937 generator, const uint32_t &ga
     //the new positions of the stars
     std::vector<sf::Vector2f> starPositions(viewStars.size());
     
-    std::cout << "|||||| Randomizing stars: posCount" << starPositions.size() << '\n';
+    std::cout << "|||||| Randomizing stars: " << starPositions.size() << '\n';
     int size = viewStars.size() / 8;
     
     /*
@@ -310,25 +310,29 @@ void StarManager::randomizeStarGalaxy(std::mt19937 generator, const uint32_t &ga
     //std::cout << "GalacticStarPositions Size: " << galacticCore.size() << '\n';
     
     //for (int spheres = 0; spheres < coreSphereAmount; ++spheres)
+    int starIndex = 0;
     for (auto itSphere : galacticCore)
     {
-        //std::cout << "SpherePositionCopy: " << spheres << '\n';
+        std::cout << "SpherePositionCopy" << '\n';
         
         for (auto itStars : itSphere)
         {
-            starPositions.push_back(itStars);
+            starPositions[starIndex] = itStars;
+            ++starIndex;
             
+            /*
             int index = 999;
             for (int i = 0; i < galacticCore.size(); ++i)
             {
                 if (galacticCore[i] == itSphere)
                     index = i;
             }
+             */
             
             //std::cout << "--- " << index << " Sphere | StarPosition: " << itStars.x << "." << itStars.y << '\n';
         }
     }
-    
+    std::cout << "|||||| After Component Copy: " << starPositions.size() << '\n';
     //give position of stars over to the entities //extra cause viewStars needs foreach
     int index = 0;
     for (auto entity: viewStars)
@@ -390,9 +394,11 @@ StarManager::generateGalacticCore(uint32_t maxStars, const uint32_t &galaxySize,
         sf::Vector2f size = sf::Vector2f(sizeDist(gen), sizeDist(gen));
         galacticCoreStarPositions[returnIndex] = generateStarSphere(maxStars / spheresAmount, galaxySize,
                                                                     sf::Vector2f(spheresPositions[i]), gen);
-        std::cout << "Generated Sphere! RandomID: " << i << " | CorrectIndex@" << returnIndex << " |Pos: "
+        /*
+         * std::cout << "Generated Sphere! RandomID: " << i << " | CorrectIndex@" << returnIndex << " |Pos: "
                   << sf::Vector2f(spheresPositions[i]).x << ":"
                   << sf::Vector2f(spheresPositions[i]).y << " | Size: " << size.x << ":" << size.y << '\n';
+                  */
         
         ++returnIndex;
     }
