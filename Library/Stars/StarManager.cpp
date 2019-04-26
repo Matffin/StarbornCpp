@@ -313,7 +313,7 @@ void StarManager::randomizeStarGalaxy(std::mt19937 generator, const uint32_t &ga
     int starIndex = 0;
     for (auto itSphere : galacticCore)
     {
-        std::cout << "SpherePositionCopy" << '\n';
+        //std::cout << "SpherePositionCopy" << '\n';
         
         for (auto itStars : itSphere)
         {
@@ -332,7 +332,7 @@ void StarManager::randomizeStarGalaxy(std::mt19937 generator, const uint32_t &ga
             //std::cout << "--- " << index << " Sphere | StarPosition: " << itStars.x << "." << itStars.y << '\n';
         }
     }
-    std::cout << "|||||| After Component Copy: " << starPositions.size() << '\n';
+    //std::cout << "|||||| After Component Copy: " << starPositions.size() << '\n';
     //give position of stars over to the entities //extra cause viewStars needs foreach
     int index = 0;
     for (auto entity: viewStars)

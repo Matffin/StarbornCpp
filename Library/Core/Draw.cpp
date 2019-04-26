@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+//#include <d2d1helper.h>
 #include "Game.h"
 #include "M/ManagerM.h"
 #include "Stars/Star.h"
@@ -43,7 +44,14 @@ void Game::draw(float dtAsSeconds)
     {
         sf::RenderStates states;
         states.texture = stars_Texture;
+//        sf::Transform transform = sf::Transform();
         
+//        transform.rotate((m_GameTimeTotal.asMilliseconds()/100*1)%360,sf::Vector2f(galaxySize/2.f,galaxySize/2.f));
+//        states.transform = transform;
+    
+
+        shader.setUniform("angle", m_GameTimeTotal.asSeconds()/10);
+        states.shader = &shader;
         m_Window.draw(*vAStars, states);
     }
     

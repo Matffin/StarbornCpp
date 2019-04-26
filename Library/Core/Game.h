@@ -50,6 +50,12 @@ private:
     
     sf::Time m_GameTimeTotal;
     
+    uint32_t starAmount = static_cast<uint32_t>(1e5);
+    const double sizeFactor = 200.0;
+    uint32_t galaxySize = std::round(static_cast<double>(starAmount)/sizeFactor);
+    
+    sf::Shader shader = sf::Shader();
+    
     void input();
     
     void update(float dtAsSeconds);

@@ -29,8 +29,9 @@ Game::Game()
     gBackground.createBackground(R"(\Content\Graphics\bg_galaxy.jpg)", sf::Vector2f(1, 1));
     
     //Create stars
-    uint32_t galaxySize = static_cast<uint32_t>(1e5);
-    ManagerM::getInstance().getStarManager().createStarGalaxy(static_cast<uint32_t>(1e6), galaxySize, true);
+    
+    std::cout << "Galaxy Cood. Size: " << galaxySize;
+    ManagerM::getInstance().getStarManager().createStarGalaxy(starAmount, galaxySize, true);
     //load star texture once
     stars_Texture = &TextureHolder::GetTexture(
             Utility::GetWorkingDirectory() + R"(\Content\Graphics\template_planet.png)");
@@ -41,6 +42,8 @@ Game::Game()
     hud_text_fps.setCharacterSize(30);
     hud_text_fps.setStyle(sf::Text::Regular);
     hud_text_fps.setFillColor(sf::Color::White);
+    
+    shader.loadFromFile(Utility::GetWorkingDirectory() + R"(\Content\Shader\rotation_vertex_shader.vert)",sf::Shader::Vertex);
 }
 
 void Game::run()
