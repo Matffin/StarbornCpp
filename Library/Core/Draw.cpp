@@ -50,7 +50,8 @@ void Game::draw(float dtAsSeconds)
 //        states.transform = transform;
     
 
-        shader.setUniform("angle", m_GameTimeTotal.asSeconds()/10);
+        shader.setUniform("dtAsSeconds", m_GameTimeTotal.asSeconds());
+        shader.setUniform("speedFactor", simulationSpeed);
         states.shader = &shader;
         m_Window.draw(*vAStars, states);
     }

@@ -43,6 +43,11 @@ void Game::input()
             if (event.key.code == sf::Keyboard::S)
                 m_GalaxyView.move(0.f, 50.f);
             
+            if (event.key.code == sf::Keyboard::Q)
+                simulationSpeed += 10;
+            if (event.key.code == sf::Keyboard::E)
+                simulationSpeed -= 10;
+    
         }
         
         //----

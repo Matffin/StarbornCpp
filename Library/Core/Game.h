@@ -54,6 +54,8 @@ private:
     const double sizeFactor = 200.0;
     uint32_t galaxySize = std::round(static_cast<double>(starAmount)/sizeFactor);
     
+    float simulationSpeed = 1;
+    
     sf::Shader shader = sf::Shader();
     
     void input();

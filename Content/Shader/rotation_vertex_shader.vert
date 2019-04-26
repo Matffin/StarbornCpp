@@ -1,4 +1,10 @@
-uniform float angle;
+#extension GL_EXT_gpu_shader4 : enable
+
+uniform float dtAsSeconds;
+uniform float speedFactor;
+
+attribute float speed;
+
 //
 mat4 rotationMatrix(vec3 axis, float angle);
 mat4 rotationMatrix(vec3 axis, float angle) {
@@ -13,12 +19,21 @@ mat4 rotationMatrix(vec3 axis, float angle) {
     0.0,                                0.0,                                0.0,                                1.0);
 }
 
-vec3 rotate(vec3 v, vec3 axis, float angle);
-vec3 rotate(vec3 v, vec3 axis, float angle) {
+vec4 rotate(vec4 v, vec3 axis, float angle);
+vec4 rotate(vec4 v, vec3 axis, float angle) {
     mat4 m = rotationMatrix(axis, angle);
-    return (m * vec4(v, 1.0)).xyz;
+    vec4 r = m * v;
+    return r;
 }
 
+vec4 transform(vec4 v, vec4 add);
+vec4 transform(vec4 v, vec4 add){
+    return v+add;
+}
+
+float rand(vec2 co){
+    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+}
 
 void main()
 {
@@ -26,7 +41,18 @@ void main()
 //    float c = cos(angle);
 //    mat2 m = mat2(c, -s, s, c);
     // transform the vertex position
-    gl_Position = rotationMatrix(vec3(0.0,0.0,1.0),angle) * gl_ModelViewProjectionMatrix * gl_Vertex;
+
+    float randomNr = gl_VertexID/100;
+    vec2 randomSeed = vec2(randomNr,randomNr);
+    speed =  (rand(randomSeed)-0.5)*speedFactor;
+
+    vec3 rotationAxis = vec3(0.0,0.0,1);
+    float rotationAngle = dtAsSeconds*speed;
+
+    float sinWave = sin(dtAsSeconds* randomNr/10000) * gl_Vertex.length * speedFactor;
+    vec4 transformPosition = vec4(0,sinWave,0,1);
+
+    gl_Position = gl_ModelViewProjectionMatrix  *rotate( transform(gl_Vertex,transformPosition),rotationAxis,rotationAngle);
 
     // transform the texture coordinates
     gl_TexCoord[0] =  gl_TextureMatrix[0]*gl_MultiTexCoord0;//
