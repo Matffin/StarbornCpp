@@ -44,6 +44,7 @@ private:
     //HUD
     sf::Font hud_font;
     sf::Text hud_text_fps;
+    sf::Text hud_text_simSpeed;
     
     //is game playing ?
     bool m_Playing = false;
@@ -54,7 +55,8 @@ private:
     const double sizeFactor = 200.0;
     uint32_t galaxySize = std::round(static_cast<double>(starAmount)/sizeFactor);
     
-    float simulationSpeed = 1;
+    float simSpeedFactor = 1;
+    float simTime = 0;
     
     sf::Shader shader = sf::Shader();
     

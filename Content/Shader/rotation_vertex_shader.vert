@@ -1,9 +1,9 @@
 #extension GL_EXT_gpu_shader4 : enable
 
 uniform float dtAsSeconds;
-uniform float speedFactor;
-
-attribute float speed;
+uniform float ttAsSeconds;
+uniform float simTime;
+uniform float random;
 
 //
 mat4 rotationMatrix(vec3 axis, float angle);
@@ -43,16 +43,22 @@ void main()
     // transform the vertex position
 
     float randomNr = gl_VertexID/100;
-    vec2 randomSeed = vec2(randomNr,randomNr);
-    speed =  (rand(randomSeed)-0.5)*speedFactor;
+    vec2 randomSeed = vec2(randomNr,random);
+    float randomSpeed = rand(randomSeed)-0.5;
+    float angle = randomSpeed * simTime;
 
     vec3 rotationAxis = vec3(0.0,0.0,1);
-    float rotationAngle = dtAsSeconds*speed;
 
-    float sinWave = sin(dtAsSeconds* randomNr/10000) * gl_Vertex.length * speedFactor;
-    vec4 transformPosition = vec4(0,sinWave,0,1);
+    float test = dtAsSeconds;
 
-    gl_Position = gl_ModelViewProjectionMatrix  *rotate( transform(gl_Vertex,transformPosition),rotationAxis,rotationAngle);
+    float sinValue = randomSpeed * simTime;
+    float sinWave = sin(sinValue) * gl_Vertex.length  * 10.0 * random;
+    vec4 transformPosition = vec4(100,sinWave,0,1);
+
+    vec4 center = vec4(100,0,0,1);
+
+    gl_Position = gl_ModelViewProjectionMatrix  *
+                    transform(rotate( transform(gl_Vertex,transformPosition),rotationAxis,angle),center);
 
     // transform the texture coordinates
     gl_TexCoord[0] =  gl_TextureMatrix[0]*gl_MultiTexCoord0;//

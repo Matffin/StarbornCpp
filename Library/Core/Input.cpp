@@ -44,10 +44,19 @@ void Game::input()
                 m_GalaxyView.move(0.f, 50.f);
             
             if (event.key.code == sf::Keyboard::Q)
-                simulationSpeed += 10;
+            {
+                simSpeedFactor = static_cast<int>(simSpeedFactor);
+                simSpeedFactor += 1;
+            }
+            
             if (event.key.code == sf::Keyboard::E)
-                simulationSpeed -= 10;
-    
+            {
+                if(simSpeedFactor <= 1)
+                simSpeedFactor /=2;
+                else{
+                    simSpeedFactor -= 1;
+                }
+            }
         }
         
         //----

@@ -39,6 +39,8 @@ void Game::draw(float dtAsSeconds)
     }
      */
     
+    simTime += dtAsSeconds*simSpeedFactor;
+    
     sf::VertexArray *vAStars = &ManagerM::getInstance().getStarManager().getVAStars();
     if (vAStars->getVertexCount() > 0 && stars_Texture != nullptr)
     {
@@ -50,8 +52,9 @@ void Game::draw(float dtAsSeconds)
 //        states.transform = transform;
     
 
-        shader.setUniform("dtAsSeconds", m_GameTimeTotal.asSeconds());
-        shader.setUniform("speedFactor", simulationSpeed);
+        shader.setUniform("dtAsSeconds", dtAsSeconds);
+        shader.setUniform("ttAsSeconds", m_GameTimeTotal.asSeconds());
+        shader.setUniform("simTime", simTime);
         states.shader = &shader;
         m_Window.draw(*vAStars, states);
     }
@@ -63,6 +66,11 @@ void Game::draw(float dtAsSeconds)
     //fps
     hud_text_fps.setString(std::to_string(1 / dtAsSeconds));
     m_Window.draw(hud_text_fps);
+    
+    
+    //Simulation Speed
+    hud_text_simSpeed.setString(std::to_string(simSpeedFactor));
+    m_Window.draw(hud_text_simSpeed);
     
     m_Window.display();
 }

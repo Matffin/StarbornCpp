@@ -43,7 +43,19 @@ Game::Game()
     hud_text_fps.setStyle(sf::Text::Regular);
     hud_text_fps.setFillColor(sf::Color::White);
     
+    hud_text_simSpeed = sf::Text("XX", hud_font);
+    hud_text_simSpeed.setCharacterSize(30);
+    hud_text_simSpeed.setStyle(sf::Text::Regular);
+    hud_text_simSpeed.setFillColor(sf::Color::White);
+    hud_text_simSpeed.setPosition(0,20);
+    
     shader.loadFromFile(Utility::GetWorkingDirectory() + R"(\Content\Shader\rotation_vertex_shader.vert)",sf::Shader::Vertex);
+    
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> distX{0, 100};
+    float randomSeed = distX(gen);
+    shader.setUniform("random",randomSeed);
 }
 
 void Game::run()

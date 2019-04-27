@@ -38,7 +38,6 @@ set(SOURCE_FILES main.cpp
 
 #need to fix for target i think
 #target_include_directories(${EXECUTABLE_NAME} Library)
-file(REMOVE ${CMAKE_CURRENT_BINARY_DIR}/Content/)
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Content/
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Content/)
 
