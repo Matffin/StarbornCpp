@@ -42,23 +42,23 @@ void main()
 //    mat2 m = mat2(c, -s, s, c);
     // transform the vertex position
 
+    vec4 center = vec4(768.3f,768.3f,0,1);
+
     float randomNr = gl_VertexID/100;
     vec2 randomSeed = vec2(randomNr,random);
     float randomSpeed = rand(randomSeed)-0.5;
-    float angle = randomSpeed * simTime;
+    float angle = randomSpeed * gl_Vertex.length * simTime;
 
     vec3 rotationAxis = vec3(0.0,0.0,1);
 
     float test = dtAsSeconds;
 
     float sinValue = randomSpeed * simTime;
-    float sinWave = sin(sinValue) * gl_Vertex.length  * 10.0 * random;
-    vec4 transformPosition = vec4(100,sinWave,0,1);
-
-    vec4 center = vec4(100,0,0,1);
+    float sinWave = sin(sinValue-gl_VertexID/10000) * (1-transform(gl_Vertex.length,center));
+    vec4 transformPosition = vec4(0,sinWave,0,1);
 
     gl_Position = gl_ModelViewProjectionMatrix  *
-                    transform(rotate( transform(gl_Vertex,transformPosition),rotationAxis,angle),center);
+    transform(rotate(transform(gl_Vertex,transformPosition),rotationAxis,angle),center);
 
     // transform the texture coordinates
     gl_TexCoord[0] =  gl_TextureMatrix[0]*gl_MultiTexCoord0;//

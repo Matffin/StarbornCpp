@@ -302,10 +302,12 @@ void StarManager::randomizeStarGalaxy(std::mt19937 generator, const uint32_t &ga
     //static std::mt19937 generator(rd());
     
     int coreStarAmount = viewStars.size(); // / 2;
-    int coreSphereAmount = 5;
+    int coreSphereAmount = 1;
     std::vector<std::vector<sf::Vector2f> > galacticCore = generateGalacticCore(coreStarAmount,
                                                                                 galaxySize,
                                                                                 coreSphereAmount, generator);
+    
+    
     
     //std::cout << "GalacticStarPositions Size: " << galacticCore.size() << '\n';
     
@@ -361,12 +363,16 @@ StarManager::generateGalacticCore(uint32_t maxStars, const uint32_t &galaxySize,
                                                                       starsOnSpot); //to provide the correct maxStars amount given back so the parent can provide the correct components of the stars with positions
     
     std::vector<sf::Vector2f> spheresPositions(0);
-    for (int x = 0; x < 3; ++x)
+    
+    int sizeCoreGen = 1;
+    
+    for (int x = 0; x < sizeCoreGen; ++x)
     {
-        for (int y = 0; y < 3; ++y)
+        for (int y = 0; y < sizeCoreGen; ++y)
         {
             spheresPositions.push_back(
-                    sf::Vector2f(x * (galaxySize / 3.f) + startOffsetted.x, y * (galaxySize / 3.f) + startOffsetted.y));
+                    sf::Vector2f(x * (galaxySize / static_cast<float>(sizeCoreGen)) + startOffsetted.x,
+                            y * (galaxySize / static_cast<float>(sizeCoreGen)) + startOffsetted.y));
             
             /*std::cout << "New Sphere Position: " << (x * (size.y / 3.f) + startOffsetted.x) << "."
                       << (y * (size.y / 3.f) + startOffsetted.y) << '\n';*/

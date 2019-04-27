@@ -59,6 +59,13 @@ void Game::draw(float dtAsSeconds)
         m_Window.draw(*vAStars, states);
     }
     
+    sf::Sprite center_Sprite = sf::Sprite();
+    center_Sprite.setTexture(*center_Texture);
+    center_Sprite.setScale(0.1f,0.1f);
+    sf::Vector2f size = center_Sprite.getScale();
+    center_Sprite.setPosition(galaxySize/2 - size.x/2, galaxySize/2 - size.y/2);
+    m_Window.draw(center_Sprite);
+    
     //std::cout << viewStars.size() << " Stars \n";
     
     m_Window.setView(m_HudView);

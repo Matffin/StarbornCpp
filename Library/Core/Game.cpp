@@ -53,9 +53,12 @@ Game::Game()
     
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> distX{0, 100};
+    std::uniform_real_distribution<float> distX{0, 1};
     float randomSeed = distX(gen);
     shader.setUniform("random",randomSeed);
+    
+    center_Texture = &TextureHolder::GetTexture(
+            Utility::GetWorkingDirectory() + R"(\Content\Graphics\bg_planet.png)");
 }
 
 void Game::run()

@@ -40,6 +40,7 @@ private:
     
     //Stars texture
     sf::Texture *stars_Texture;
+    sf::Texture *center_Texture;
     
     //HUD
     sf::Font hud_font;

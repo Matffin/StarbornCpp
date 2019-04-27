@@ -48,7 +48,7 @@ private:
     sf::VertexArray m_VAStars;
     
     sf::Vector2f STARS_POOLPOSITION = sf::Vector2f(-100.f, -100.f);
-    sf::Vector2f STARS_SINGLESIZE = sf::Vector2f(19.2f, 19.2f);
+    sf::Vector2f STARS_SINGLESIZE = sf::Vector2f( 2.5f, 2.5f);
     sf::Vector2f STARS_TEXTURESIZE = sf::Vector2f(128.f, 128.f);
     
     std::vector<std::vector<sf::Vector2f> >
