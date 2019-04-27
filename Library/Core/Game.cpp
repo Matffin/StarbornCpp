@@ -49,13 +49,23 @@ Game::Game()
     hud_text_simSpeed.setFillColor(sf::Color::White);
     hud_text_simSpeed.setPosition(0,20);
     
-    shader.loadFromFile(Utility::GetWorkingDirectory() + R"(\Content\Shader\rotation_vertex_shader.vert)",sf::Shader::Vertex);
+    galaxyShader.loadFromFile(Utility::GetWorkingDirectory() + R"(\Content\Shader\rotation_vertex_shader.vert)",sf::Shader::Vertex);
+//    galaxyShader.loadFromFile(Utility::GetWorkingDirectory() + R"(\Content\Shader\galaxy_vertex_shader.vert)",
+//                              Utility::GetWorkingDirectory() + R"(\Content\Shader\galaxy_geometry_shader.geom)",
+//                              Utility::GetWorkingDirectory() + R"(\Content\Shader\galaxy_fragment_shader.frag)");
+//
+//    galaxyShader.setUniform("texture", &TextureHolder::GetTexture(
+//            Utility::GetWorkingDirectory() + R"(\Content\Graphics\template_planet.png)"));
+    
+    // Set the render resolution (used for proper scaling)
+//    galaxyShader.setUniform("resolution", sf::Vector2f(800, 600));
+    
     
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<float> distX{0, 1};
     float randomSeed = distX(gen);
-    shader.setUniform("random",randomSeed);
+    galaxyShader.setUniform("random",randomSeed);
     
     center_Texture = &TextureHolder::GetTexture(
             Utility::GetWorkingDirectory() + R"(\Content\Graphics\bg_planet.png)");

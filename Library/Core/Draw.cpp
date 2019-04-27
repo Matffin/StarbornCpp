@@ -52,10 +52,26 @@ void Game::draw(float dtAsSeconds)
 //        states.transform = transform;
     
 
-        shader.setUniform("dtAsSeconds", dtAsSeconds);
-        shader.setUniform("ttAsSeconds", m_GameTimeTotal.asSeconds());
-        shader.setUniform("simTime", simTime);
-        states.shader = &shader;
+        //galaxyShader.setUniform("dtAsSeconds", dtAsSeconds);
+        //galaxyShader.setUniform("ttAsSeconds", m_GameTimeTotal.asSeconds());
+        galaxyShader.setUniform("simTime", simTime);
+    
+    
+//        galaxyShader.setUniform("size", sf::Vector2f(10.f, 10.f));
+        
+        states.shader = &galaxyShader;
+//        states.texture = &TextureHolder::GetTexture(
+//                Utility::GetWorkingDirectory() + R"(\Content\Graphics\template_planet.png)");
+//
+//        sf::Transform m_transform = sf::Transform::Identity;
+//        // Move to the center of the window
+//        m_transform.translate(400, 300);
+//        // Rotate everything based on cursor position
+//        m_transform.rotate(0);
+//
+//        states.transform = m_transform;
+    
+//        std::cout << vAStars->operator[](0).position.x << vAStars->operator[](0).position.y;
         m_Window.draw(*vAStars, states);
     }
     

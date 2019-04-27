@@ -59,7 +59,7 @@ private:
     float simSpeedFactor = 1;
     float simTime = 0;
     
-    sf::Shader shader = sf::Shader();
+    sf::Shader galaxyShader = sf::Shader();
     
     void input();
     
