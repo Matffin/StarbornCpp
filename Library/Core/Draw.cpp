@@ -59,10 +59,10 @@ void Game::draw(float dtAsSeconds)
     
 //        galaxyShader.setUniform("size", sf::Vector2f(10.f, 10.f));
         
-        states.shader = &galaxyShader;
-//        states.texture = &TextureHolder::GetTexture(
-//                Utility::GetWorkingDirectory() + R"(\Content\Graphics\template_planet.png)");
-//
+        //states.shader = &galaxyShader;
+        states.texture = &TextureHolder::GetTexture(
+                Utility::GetWorkingDirectory() + R"(\Content\Graphics\template_planet.png)");
+
 //        sf::Transform m_transform = sf::Transform::Identity;
 //        // Move to the center of the window
 //        m_transform.translate(400, 300);

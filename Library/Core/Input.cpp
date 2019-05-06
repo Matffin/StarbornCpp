@@ -29,7 +29,6 @@ void Game::input()
                 
                 std::mt19937 gen(time(nullptr));
                 std::cout << "Time Random: " << time(nullptr) << '\n';
-                uint32_t galaxySize = static_cast<uint32_t>(1e2);
                 ManagerM::getInstance().getStarManager().randomizeStarGalaxy(gen, galaxySize);
             }
             
