@@ -50,12 +50,12 @@ private:
     
     //Some general star values
     const sf::Vector2f STARS_POOLPOSITION = sf::Vector2f(-100.f, -100.f);
-    const sf::Vector2f STARS_SINGLESIZE = sf::Vector2f(2.5f, 2.5f); //the size of one single star
+    const float STARS_MEDIANSIZE = 2.5f; //the size of one single star
     const sf::Vector2f STARS_TEXTURESIZE = sf::Vector2f(128.f, 128.f); //the texture size of the star texture
     const int GALAXY_CORE_SPHERESAMOUNT = 5;
-    const float GALAXY_CORE_SPHERE_SIZE_MIN = 30.f;
-    const float GALAXY_CORE_SPHERE_SIZE_MAX = 200.f;
-    
+    const float GALAXY_CORE_SPHERE_SIZE_MIN = 50.f;
+    const float GALAXY_CORE_SPHERE_SIZE_MAX = 300.f;
+    const sf::Color POSSIBLE_COLORS[3] = {sf::Color(4, 93, 250, 255), sf::Color(255, 0, 204, 255), sf::Color::White};
     
     //Generates a 2 dimensional unsorted array of star positions. unsorted because positions are generated random to use normal distribution. 2 dimensional because maybe in the future
     //the stars could be sorted so each star knows his neighbors :)

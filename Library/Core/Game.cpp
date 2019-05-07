@@ -36,7 +36,7 @@ Game::Game()
 //    std::cout << "Galaxy Cood. Size: " << galaxySize << '\n';
     //load star texture once
     stars_Texture = TextureHolder::GetTexture(
-            Utility::GetWorkingDirectory() + R"(\Content\Graphics\template_planet.png)");
+            Utility::GetWorkingDirectory() + R"(\Content\Graphics\sun.png)");
 
     //call the star manager to start creating
     ManagerM::getInstance().getStarManager()->createStarGalaxy(starAmount, galaxySize, true);

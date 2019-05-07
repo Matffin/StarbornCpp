@@ -52,10 +52,9 @@ private:
     
     //total stars in galaxy as 32 unsinged int for possible high values
     uint32_t starAmount = static_cast<uint32_t>(1e4);
-    //the dividor for the galaxy size calculation to determine size by star count
-    const double sizeFactor = 100.0;
+    //galaxy size
+    uint32_t galaxySize = static_cast<uint32_t>(5e2);
     //the size of one side of the galaxy square, calculated by the amount of stars
-    uint32_t galaxySize = std::round(static_cast<double>(starAmount)/sizeFactor);
     
     //main function for input processing
     void input();

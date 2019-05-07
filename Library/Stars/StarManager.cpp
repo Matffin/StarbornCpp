@@ -30,6 +30,7 @@ void StarManager::createStarGalaxy(const uint32_t &max_stars, const uint32_t &ga
     
     //const values
     const int VERTS_IN_QUAD = 4;
+    std::uniform_int_distribution colorsPossible{0, 2};
     
     //create the vertex array for the star textures
     m_VAStars = sf::VertexArray();
@@ -56,31 +57,39 @@ void StarManager::createStarGalaxy(const uint32_t &max_stars, const uint32_t &ga
         //--------------------------------------------------------------------------------------------------------------------------------------------
         //Positioning
         //COMPONENT Position at the end of the galaxy plus a little for a pool position
-        m_Stars.assign<StarPosition>(entity, galaxySize + 100, galaxySize + 100);
+        m_Stars.assign<StarPosition>(entity, STARS_POOLPOSITION.x, STARS_POOLPOSITION.y);
+        
+        //--------------------------------------------------------------------------------------------------------------------------------------------
+        //Color
+        sf::Color col = POSSIBLE_COLORS[colorsPossible(gen)];
         
         //--------------------------------------------------------------------------------------------------------------------------------------------
         //Vertex Array
-        sf::Vector2f xZero_yZero = sf::Vector2f(STARS_POOLPOSITION.x - (STARS_SINGLESIZE.x / 2),
-                                                STARS_POOLPOSITION.y - (STARS_SINGLESIZE.y / 2));
-        sf::Vector2f xOne_yZero = sf::Vector2f(STARS_POOLPOSITION.x + (STARS_SINGLESIZE.x / 2),
-                                               STARS_POOLPOSITION.y - (STARS_SINGLESIZE.y / 2));
-        sf::Vector2f xOne_yOne = sf::Vector2f(STARS_POOLPOSITION.x + (STARS_SINGLESIZE.x / 2),
-                                              STARS_POOLPOSITION.y + (STARS_SINGLESIZE.y / 2));
-        sf::Vector2f xZero_yOne = sf::Vector2f(STARS_POOLPOSITION.x - (STARS_SINGLESIZE.x / 2),
-                                               STARS_POOLPOSITION.y + (STARS_SINGLESIZE.y / 2));
+        sf::Vector2f xZero_yZero = sf::Vector2f(STARS_POOLPOSITION.x - (STARS_MEDIANSIZE / 2),
+                                                STARS_POOLPOSITION.y - (STARS_MEDIANSIZE / 2));
+        sf::Vector2f xOne_yZero = sf::Vector2f(STARS_POOLPOSITION.x + (STARS_MEDIANSIZE / 2),
+                                               STARS_POOLPOSITION.y - (STARS_MEDIANSIZE / 2));
+        sf::Vector2f xOne_yOne = sf::Vector2f(STARS_POOLPOSITION.x + (STARS_MEDIANSIZE / 2),
+                                              STARS_POOLPOSITION.y + (STARS_MEDIANSIZE / 2));
+        sf::Vector2f xZero_yOne = sf::Vector2f(STARS_POOLPOSITION.x - (STARS_MEDIANSIZE / 2),
+                                               STARS_POOLPOSITION.y + (STARS_MEDIANSIZE / 2));
         //position the vertex in the in each quad
         //X=0 Y=0
         m_VAStars[currentVertex + 0].position = sf::Vector2f(xZero_yZero);
         m_VAStars[currentVertex + 0].texCoords = sf::Vector2f(0, 0);
+        m_VAStars[currentVertex + 0].color = col;
         //X=1 Y=0
         m_VAStars[currentVertex + 1].position = sf::Vector2f(xOne_yZero);
         m_VAStars[currentVertex + 1].texCoords = sf::Vector2f(STARS_TEXTURESIZE.x, 0);
+        m_VAStars[currentVertex + 0].color = col;
         //X=1 Y=1
         m_VAStars[currentVertex + 2].position = sf::Vector2f(xOne_yOne);
         m_VAStars[currentVertex + 2].texCoords = sf::Vector2f(STARS_TEXTURESIZE.x, STARS_TEXTURESIZE.y);
+        m_VAStars[currentVertex + 0].color = col;
         //X=0 Y=1
         m_VAStars[currentVertex + 3].position = sf::Vector2f(xZero_yOne);
         m_VAStars[currentVertex + 3].texCoords = sf::Vector2f(0, STARS_TEXTURESIZE.y);
+        m_VAStars[currentVertex + 0].color = col;
         
         //--------------------------------------------------------------------------------------------------------------------------------------------
         //update for the next vertices to start +4 in the array
@@ -93,8 +102,8 @@ void StarManager::createStarGalaxy(const uint32_t &max_stars, const uint32_t &ga
     
     if (positionStarsInGalaxy)
     {
-        std::mt19937 generator(time(nullptr));
-        randomizeStarGalaxy(generator, galaxySize);
+        //std::mt19937 generator(time(nullptr));
+        randomizeStarGalaxy(gen, galaxySize);
     }
 }
 
@@ -248,7 +257,7 @@ StarManager::generateGalacticCore(uint32_t maxStars, const uint32_t &galaxySize,
         //create a random sphereSize inside the range given
         sf::Vector2f sphereSize = sf::Vector2f(sizeDist(gen), sizeDist(gen));
         sf::Vector2f spherePosition = sf::Vector2f(spheresPositions[i]);
-    
+
 //        std::cout << "Generation for Sphere started with RandomID in Grid: " << i << " | Number of Sphere in Total: " << sphereIndexInGrid << " |Pos: "
 //                  << sf::Vector2f(spheresPositions[i]).x << ":"
 //                  << sf::Vector2f(spheresPositions[i]).y << " | Size: " << sphereSize.x << ":" << sphereSize.y << '\n';
@@ -292,7 +301,7 @@ StarManager::generateStarSphere(uint32_t maxStars, sf::Vector2f &sphereSize, sf:
         //store in the list
         sphereStars[star] = sf::Vector2f(xPos, yPos);
     }
-    
+
 //    std::cout << "Generated Sphere-Positions for Sphere at: " << offset.x << ":" << offset.y
 //              << " | Size: " << xSize << ":" << ySize << '\n';
     
@@ -307,6 +316,11 @@ void StarManager::updateVAStars(std::vector<sf::Vector2f> &starPositions)
      * */
     
     //--------------------------------------------------------------------------------------------------------------------------------------------
+    //create random generator
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    
+    //--------------------------------------------------------------------------------------------------------------------------------------------
     //const values
     const int VERTS_IN_QUAD = 4;
     
@@ -314,20 +328,27 @@ void StarManager::updateVAStars(std::vector<sf::Vector2f> &starPositions)
     m_VAStars.resize(starPositions.size() * VERTS_IN_QUAD);
     
     //--------------------------------------------------------------------------------------------------------------------------------------------
+    //Scaling
+    std::uniform_real_distribution<float> xSizes{STARS_MEDIANSIZE - 3, STARS_MEDIANSIZE + 3};
+    
+    //--------------------------------------------------------------------------------------------------------------------------------------------
     //Fill in the positions
     int currentVAIndex = 0;
     for (auto position : starPositions)
     {
+        float size = xSizes(gen);
+        sf::Vector2f starScale = sf::Vector2f(size, size);
+        
         //--------------------------------------------------------------------------------------------------------------------------------------------
         //Calculate the vertex array position Vertex Array
-        sf::Vector2f xZero_yZero = sf::Vector2f(position.x - (STARS_SINGLESIZE.x / 2),
-                                                position.y - (STARS_SINGLESIZE.y / 2));
-        sf::Vector2f xOne_yZero = sf::Vector2f(position.x + (STARS_SINGLESIZE.x / 2),
-                                               position.y - (STARS_SINGLESIZE.y / 2));
-        sf::Vector2f xOne_yOne = sf::Vector2f(position.x + (STARS_SINGLESIZE.x / 2),
-                                              position.y + (STARS_SINGLESIZE.y / 2));
-        sf::Vector2f xZero_yOne = sf::Vector2f(position.x - (STARS_SINGLESIZE.x / 2),
-                                               position.y + (STARS_SINGLESIZE.y / 2));
+        sf::Vector2f xZero_yZero = sf::Vector2f(position.x - (starScale.x / 2),
+                                                position.y - (starScale.y / 2));
+        sf::Vector2f xOne_yZero = sf::Vector2f(position.x + (starScale.x / 2),
+                                               position.y - (starScale.y / 2));
+        sf::Vector2f xOne_yOne = sf::Vector2f(position.x + (starScale.x / 2),
+                                              position.y + (starScale.y / 2));
+        sf::Vector2f xZero_yOne = sf::Vector2f(position.x - (starScale.x / 2),
+                                               position.y + (starScale.y / 2));
         
         //--------------------------------------------------------------------------------------------------------------------------------------------
         //Set the positions inside the vertex array. The texCoords remain unchanged as they are set on creation
