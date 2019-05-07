@@ -1,4 +1,5 @@
 //
+// This script is partly courtesy of John Horton from the Book "Beginning C++ Game Programming" released by Packt>
 // Created by Martin on 08.04.2019.
 //
 

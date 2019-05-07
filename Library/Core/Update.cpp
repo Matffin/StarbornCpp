@@ -6,6 +6,9 @@
 #include <SFML/Graphics.hpp>
 #include <sstream>
 
+//-------------------
+//Main Update Function
+//-------------------
 void Game::update(float dtAsSeconds)
 {
     if (m_Playing)

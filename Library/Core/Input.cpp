@@ -2,13 +2,15 @@
 // Created by Martin on 09.04.2019.
 //
 
-#include <Library/Stars/StarManager.h>
-#include <Library/M/ManagerM.h>
 #include "Game.h"
 #include "Stars/Star.h"
 
+//-------------------
+//Main Input Process Function
+//-------------------
 void Game::input()
 {
+    //create the sfml event and catch the input events
     sf::Event event;
     while (m_Window.pollEvent(event))
     {
@@ -22,17 +24,19 @@ void Game::input()
             {
                 m_Window.close();
             }
-            // Handle the player starting the game
+            // Handle the player randomizing galaxy
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
             {
+                //pausing is temporarily disabled as not needed
                 //m_Playing = !m_Playing;
                 
+                //create a new random generator for the galaxy randomization
                 std::mt19937 gen(time(nullptr));
                 std::cout << "Time Random: " << time(nullptr) << '\n';
-                ManagerM::getInstance().getStarManager().randomizeStarGalaxy(gen, galaxySize);
+                ManagerM::getInstance().getStarManager()->randomizeStarGalaxy(gen, galaxySize);
             }
             
-            //move the map
+            //move the galaxy view
             if (event.key.code == sf::Keyboard::A)
                 m_GalaxyView.move(-50.f, 0.f);
             if (event.key.code == sf::Keyboard::D)
@@ -41,21 +45,6 @@ void Game::input()
                 m_GalaxyView.move(0.f, -50.f);
             if (event.key.code == sf::Keyboard::S)
                 m_GalaxyView.move(0.f, 50.f);
-            
-            if (event.key.code == sf::Keyboard::Q)
-            {
-                simSpeedFactor = static_cast<int>(simSpeedFactor);
-                simSpeedFactor += 1;
-            }
-            
-            if (event.key.code == sf::Keyboard::E)
-            {
-                if(simSpeedFactor <= 1)
-                simSpeedFactor /=2;
-                else{
-                    simSpeedFactor -= 1;
-                }
-            }
         }
         
         //----

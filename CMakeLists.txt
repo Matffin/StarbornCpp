@@ -29,12 +29,12 @@ set(SOURCE_FILES main.cpp
         Library/Core/Game.cpp
         Library/Core/Input.cpp
         Library/Core/Update.cpp
-        Library/TextureManager/TextureHolder.cpp
-        Library/Stars/StarManager.cpp
         Library/M/ManagerM.cpp
+        Library/TextureHolder/TextureHolder.cpp
+        Library/Stars/StarManager.cpp
         Library/Galaxy/GalaxyBackground.cpp)
 
-#set(HEADER_FILES Library/Utility/Utilities.h Library/Utility/RandomGenerator.h Library/Utility/Helpers.h Library/TextureManager/TextureHolder.h Library/TextureManager/TextureHolder.cpp Library/Core/Game.h Library/Core/Game.cpp Library/Core/Input.cpp Library/Core/Update.cpp Library/Core/Draw.cpp)
+#set(HEADER_FILES Library/Utility/Utilities.h Library/Utility/RandomGenerator.h Library/Utility/Helpers.h Library/TextureHolder/TextureHolder.h Library/TextureHolder/TextureHolder.cpp Library/Core/Game.h Library/Core/Game.cpp Library/Core/Input.cpp Library/Core/Update.cpp Library/Core/Draw.cpp)
 
 #need to fix for target i think
 #target_include_directories(${EXECUTABLE_NAME} Library)

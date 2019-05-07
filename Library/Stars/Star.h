@@ -7,54 +7,42 @@
 
 #include <string>
 
-//---------------------------------------------
-//---------------------------------------------
-//---------------------------------------------
-//---------------------------------------------
-//TODO: Remove the sprite from the star and only give him
-//ID,name etc. because sprites should be loaded only for the stars on screen currently
-//---------------------------------------------
-//---------------------------------------------
-//---------------------------------------------
-//---------------------------------------------
+//-------------------
+//Star Object. Holds the stars name. Used in ECS as a component to define a star and holds its data
+//-------------------
 class Star
 {
 private:
     std::string m_name;
-    
-    //sf::Sprite m_starSprite;
-    
-    //sf::Sprite m_starBgSprite;
 
 public:
     Star(std::string name) { m_name = name; };
     
     std::string GetName() { return m_name; };
-    
-    //sf::Sprite &StarSprite() { return m_starSprite; };
-    
-    //sf::Sprite &StarBgSprite() { return m_starBgSprite; };
 };
 
+//-------------------
+//Star Position Object. Used in the ECS as a component to define star position and hold the data
+//-------------------
 class StarPosition
 {
 private:
-    float m_xPos;
-    float m_yPos;
+    sf::Vector2f m_position;
 
 public:
     StarPosition(float xPos, float yPos)
     {
-        m_xPos = xPos;
-        m_yPos = yPos;
+        m_position.x = xPos;
+        m_position.y = yPos;
     };
     
-    sf::Vector2f GetPos() { return sf::Vector2f(m_xPos, m_yPos); };
+    //reference as could be accessed often
+    sf::Vector2f &GetPos() { return m_position; };
     
     void SetPos(float xPos, float yPos)
     {
-        m_xPos = xPos;
-        m_yPos = yPos;
+        m_position.x = xPos;
+        m_position.y = yPos;
     };
 };
 

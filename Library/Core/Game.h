@@ -3,17 +3,20 @@
 //
 
 #pragma once
-#ifndef STARBORN_02_GAME_H
-#define STARBORN_02_GAME_H
 
-#include "TextureManager/TextureHolder.h"
-
+//External
 #include <SFML/Graphics.hpp>
 #include <ECS/entt.hpp>
 
+//Managers
+#include "TextureHolder/TextureHolder.h"
+#include "Stars/StarManager.h"
 #include "M/ManagerM.h"
+
+//Utility
 #include "Utility/Utilities.h"
 #include "Utility/RandomGenerator.h"
+//Custom
 #include "Galaxy/GalaxyBackground.h"
 #include "Stars/Star.h"
 #include "Stars/StarManager.h"
@@ -21,57 +24,50 @@
 class Game
 {
 private:
-    //the texture holder
-    TextureHolder th;
-    
-    const int TILE_SIZE = 50;
-    const int VERTS_IN_QUAD = 4;
-    
+    //main game window
     sf::RenderWindow m_Window;
-    
+    //the main sfml view for objects in the galaxy foreground
     sf::View m_GalaxyView;
-    
+    //the main sfml view for background objects
     sf::View m_GalaxyBackgroundView;
-    
+    //the main hud view
     sf::View m_HudView;
     
-    //Background
+    //The custom background object using sfml vertex array
     GalaxyBackground gBackground;
     
-    //Stars texture
-    sf::Texture *stars_Texture;
-    sf::Texture *center_Texture;
+    //Stars texture pointer for easier reuse
+    sf::Texture stars_Texture;
     
-    //HUD
+    //HUD sfml elements
     sf::Font hud_font;
+    //HUD text
     sf::Text hud_text_fps;
-    sf::Text hud_text_simSpeed;
     
-    //is game playing ?
+    //play pause switch
     bool m_Playing = false;
     
+    //total game time storage
     sf::Time m_GameTimeTotal;
     
+    //total stars in galaxy as 32 unsinged int for possible high values
     uint32_t starAmount = static_cast<uint32_t>(1e4);
-    const double sizeFactor = 200.0;
+    //the dividor for the galaxy size calculation to determine size by star count
+    const double sizeFactor = 100.0;
+    //the size of one side of the galaxy square, calculated by the amount of stars
     uint32_t galaxySize = std::round(static_cast<double>(starAmount)/sizeFactor);
     
-    float simSpeedFactor = 1;
-    float simTime = 0;
-    
-    sf::Shader galaxyShader = sf::Shader();
-    
+    //main function for input processing
     void input();
-    
+    //main function for game data update
     void update(float dtAsSeconds);
-    
+    //main function for drawing the game elements
     void draw(float dtAsSeconds);
 
 public:
+    //constr.
     Game();
     
+    //main loop accessed via the programs main
     void run();
 };
-
-
-#endif //STARBORN_02_GAME_H

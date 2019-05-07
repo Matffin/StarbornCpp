@@ -3,13 +3,18 @@
 //
 #include "Core/Game.h"
 
+//-------------------
+//Game Constructor called on program startup
+//-------------------
 Game::Game()
 {
-    //initialize managers
+    //initialize managers via the ManagerManager instance
     ManagerM::getInstance().startAllManagers();
     
+    TextureHolder tH = TextureHolder();
+    
     // Get the screen resolution
-    // and create an SFML window and View
+    // and create an SFML window
     sf::Vector2f resolution;
     resolution.x = sf::VideoMode::getDesktopMode().width;
     resolution.y = sf::VideoMode::getDesktopMode().height;
@@ -18,77 +23,60 @@ Game::Game()
     m_Window.create(sf::VideoMode(resolution.x, resolution.y),
                     "Starborn", sf::Style::Default);
     
-    //initialize the fullscreen view
+    //initialize the views
     m_GalaxyView.setSize(resolution);
     m_GalaxyView.move(-(resolution.x / 2), -(resolution.y / 2));
     m_HudView.reset(sf::FloatRect(0, 0, resolution.x, resolution.y));
-    
     m_GalaxyBackgroundView.reset(sf::FloatRect(0, 0, resolution.x, resolution.y));
     
-    //Background
+    //create background with vertex array. pass background texture path
     gBackground.createBackground(R"(\Content\Graphics\bg_galaxy.jpg)", sf::Vector2f(1, 1));
     
-    //Create stars
-    
-    std::cout << "Galaxy Cood. Size: " << galaxySize;
-    ManagerM::getInstance().getStarManager().createStarGalaxy(starAmount, galaxySize, true);
+    //Create some stars :)
+//    std::cout << "Galaxy Cood. Size: " << galaxySize << '\n';
     //load star texture once
-    stars_Texture = &TextureHolder::GetTexture(
+    stars_Texture = TextureHolder::GetTexture(
             Utility::GetWorkingDirectory() + R"(\Content\Graphics\template_planet.png)");
-    
+
+    //call the star manager to start creating
+    ManagerM::getInstance().getStarManager()->createStarGalaxy(starAmount, galaxySize, true);
+
     //Initialize HUD
     hud_font.loadFromFile(Utility::GetWorkingDirectory() + R"(\Content\Fonts\SourceCodePro-Regular.ttf)");
     hud_text_fps = sf::Text("XX", hud_font);
     hud_text_fps.setCharacterSize(30);
     hud_text_fps.setStyle(sf::Text::Regular);
     hud_text_fps.setFillColor(sf::Color::White);
-    
-    hud_text_simSpeed = sf::Text("XX", hud_font);
-    hud_text_simSpeed.setCharacterSize(30);
-    hud_text_simSpeed.setStyle(sf::Text::Regular);
-    hud_text_simSpeed.setFillColor(sf::Color::White);
-    hud_text_simSpeed.setPosition(0,20);
-    
-    galaxyShader.loadFromFile(Utility::GetWorkingDirectory() + R"(\Content\Shader\rotation_vertex_shader.vert)",sf::Shader::Vertex);
-//    galaxyShader.loadFromFile(Utility::GetWorkingDirectory() + R"(\Content\Shader\galaxy_vertex_shader.vert)",
-//                              Utility::GetWorkingDirectory() + R"(\Content\Shader\galaxy_geometry_shader.geom)",
-//                              Utility::GetWorkingDirectory() + R"(\Content\Shader\galaxy_fragment_shader.frag)");
-//
-//    galaxyShader.setUniform("texture", &TextureHolder::GetTexture(
-//            Utility::GetWorkingDirectory() + R"(\Content\Graphics\template_planet.png)"));
-    
-    // Set the render resolution (used for proper scaling)
-//    galaxyShader.setUniform("resolution", sf::Vector2f(800, 600));
-    
-    
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> distX{0, 1};
-    float randomSeed = distX(gen);
-    galaxyShader.setUniform("random",randomSeed);
-    
-    center_Texture = &TextureHolder::GetTexture(
-            Utility::GetWorkingDirectory() + R"(\Content\Graphics\bg_planet.png)");
 }
 
+//-------------------
+//Game Main Loop. Called by main.cpp
+//-------------------
 void Game::run()
 {
-    //timing
+    //create the games internal clock using sfml
     sf::Clock clock;
     
+    //main game loop
     while (m_Window.isOpen())
     {
+        //get the delta time from the clock for frame dependency
         sf::Time dt = clock.restart();
         //update the total game time
         m_GameTimeTotal += dt;
         //make decimal fraction from the delta time
         float dtAsSeconds = dt.asSeconds();
         
+        //process the input for the frame
         input();
+        //update the game data
         update(dtAsSeconds);
+        //update the managers to process data
         ManagerM::getInstance().updateAllManagers();
+        //lastly update the graphics
         draw(dtAsSeconds);
     }
     
+    //destroy managers on end for cleanup
     ManagerM::getInstance().destroyAllManagers();
 }

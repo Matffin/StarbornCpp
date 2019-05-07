@@ -3,13 +3,15 @@
 //
 
 #include "GalaxyBackground.h"
-#include "TextureManager/TextureHolder.h"
-#include "Utility/Utilities.h"
 
-
+//-------------------
+//Creates a vertex array with a given filename
+//Currently this is a little useless as the background image is only tiled once over the entire screen.
+//This can later be used to draw more backgroundtiles for a procedural environment etc.
+//-------------------
 bool GalaxyBackground::createBackground(const std::string &filename, sf::Vector2f worldSize)
 {
-    //sf::VertexArray &rVA, sf::IntRect worldSize
+    //first get the texture reference
     m_texture = TextureHolder::GetTexture(
             Utility::GetWorkingDirectory() + filename);
     
@@ -21,7 +23,7 @@ bool GalaxyBackground::createBackground(const std::string &filename, sf::Vector2
     const int VERTS_IN_QUAD = 4;
     
     //get the amount of tiles needed for the width of the world
-    int tileAmountWidth = worldSize.x;
+    int tileAmountWidth = worldSize.x; //Currently worldsize is just 1x1. later this can be used to make bigger backgrounds like 9x9 etc.
     int tileAmountHeight = worldSize.y;
     
     //size the vertex array to fit all tiles with all 4 vertices
@@ -31,13 +33,14 @@ bool GalaxyBackground::createBackground(const std::string &filename, sf::Vector2
     
     int currentVertex = 0;
     
+    //fill the vertex array with the tiles needed.
     for (int w = 0; w < tileAmountWidth; w++)
     {
         for (int h = 0; h < tileAmountHeight; h++)
         {
             //std::cout << "Current vertex : " << currentVertex << '\n';
             
-            //position the vertex in the in each quad
+            //Fill the positions of the vertex array for each tile and each corner of the tile. Also sets texture coordinates on the image
             //X=0 Y=0
             m_vertices[currentVertex + 0].position = sf::Vector2f(w * FINAL_PX_SIZE_X, h * FINAL_PX_SIZE_Y);
             m_vertices[currentVertex + 0].texCoords = sf::Vector2f(0, 0);
@@ -58,8 +61,8 @@ bool GalaxyBackground::createBackground(const std::string &filename, sf::Vector2
         }
     }
     
-    std::cout << "VertexCount: " << m_vertices.getVertexCount() << " | InitializeCount: "
-              << tileAmountWidth * tileAmountHeight * VERTS_IN_QUAD << '\n';
+//    std::cout << "Background Vertex-ArrayCount: " << m_vertices.getVertexCount() << " | InitializeCount: "
+//              << tileAmountWidth * tileAmountHeight * VERTS_IN_QUAD << '\n';
     
     return true;
 }

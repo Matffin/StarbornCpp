@@ -2,15 +2,17 @@
 // Created by Martin on 11.04.2019.
 //
 
-#include <iostream>
+#include "Stars/StarManager.h"
 #include "ManagerM.h"
 
 ManagerM::ManagerM()
-= default;
+{
+
+}
 
 int ManagerM::startAllManagers()
 {
-    starManager = StarManager();
+    //starManager = StarManager();
 }
 
 int ManagerM::updateAllManagers()
