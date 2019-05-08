@@ -109,7 +109,7 @@ void StarManager::createStarGalaxy(const uint32_t &max_stars, const uint32_t &ga
 
 void StarManager::randomizeStarGalaxy(std::mt19937 &generator, const uint32_t &galaxySize)
 {
-    std::cout << "------ Randomizing Galaxy: " << generator.initialization_multiplier << " ------" << '\n';
+//    std::cout << "------ Randomizing Galaxy: " << generator.initialization_multiplier << " ------" << '\n';
     
     //get all the star entities that have a star position via the star manager
     auto viewStars = ManagerM::getInstance().getStarManager()->getStars().view<StarPosition>();
@@ -126,6 +126,7 @@ void StarManager::randomizeStarGalaxy(std::mt19937 &generator, const uint32_t &g
      * this creates a cluster of stars that looks non-spherical. as a few smaller spheres overlap.
      */
     
+    
     //--------------------------------------------------------------------------------------------------------------------------------------------
     //the amount of stars in the core should currently be all the stars
     int coreStarAmount = viewStars.size();
@@ -138,6 +139,7 @@ void StarManager::randomizeStarGalaxy(std::mt19937 &generator, const uint32_t &g
     
     //--------------------------------------------------------------------------------------------------------------------------------------------
     //transfer the star positions from the 2dimensional array given by the galaxy core into the 1dimensional for further processing
+    //use index here as emplace_back is very slow
     int starIndex = 0;
     for (auto itSphere : galacticCore)
     {
@@ -182,7 +184,12 @@ StarManager::generateGalacticCore(uint32_t maxStars, const uint32_t &galaxySize,
      */
     
     //--------------------------------------------------------------------------------------------------------------------------------------------
-    sf::Vector2f startOffset{0.f, 0.f};
+    //creates 9 possible positions in a 3x3 uniform grid over the galaxy core space
+    int spheresGridAmountX = 3;
+    //calculate the start offset. so the galactic core is actually in the center. Take the half of the galaxy. then subtract
+    //a third of the galaxy size as the grid is 9x9 but starting at 0 -> a third of the galaxySize is the half of the galactic Core
+    //NOTE: the second part behind the - needs to be adjusted
+    sf::Vector2f startOffset{(galaxySize/2.f) - (galaxySize/3.f), (galaxySize/2.f) - (galaxySize/3.f)};
     //calculate how many stars a single sphere can hold
     std::vector<sf::Vector2f> starsOnSpot(maxStars / spheresAmount, startOffset);
     //create a 2 dimensional array of positions. X holds the amount of spheres. Y holds the Star Positions for each sphere Xn
@@ -195,8 +202,6 @@ StarManager::generateGalacticCore(uint32_t maxStars, const uint32_t &galaxySize,
     //Create a vector that holds the positions the galaxy spheres in the core can have
     //This will just be a uniform distributed 3x3 matrix over the size of the galaxy
     std::vector<sf::Vector2f> spheresPositions(0);
-    //creates 9 possible positions in a 3x3 uniform grid over the galaxy core space
-    int spheresGridAmountX = 3;
     for (int x = 0; x < spheresGridAmountX; ++x)
     {
         for (int y = 0; y < spheresGridAmountX; ++y)
@@ -210,7 +215,7 @@ StarManager::generateGalacticCore(uint32_t maxStars, const uint32_t &galaxySize,
         }
     }
     
-    std::cout << "|||||| SpherePositions: " << spheresPositions.size() << '\n';
+//    std::cout << "|||||| SpherePositions: " << spheresPositions.size() << '\n';
     
     //--------------------------------------------------------------------------------------------------------------------------------------------
     //Random Position in Grid Pick
@@ -309,6 +314,8 @@ StarManager::generateStarSphere(uint32_t maxStars, sf::Vector2f &sphereSize, sf:
     return sphereStars;
 }
 
+
+
 void StarManager::updateVAStars(std::vector<sf::Vector2f> &starPositions)
 {
     /*
@@ -365,5 +372,5 @@ void StarManager::updateVAStars(std::vector<sf::Vector2f> &starPositions)
     }
     
     //--------------------------------------------------------------------------------------------------------------------------------------------
-    std::cout << "------ Updated Vertex Array for Stars: " << currentVAIndex / VERTS_IN_QUAD << " ------" << '\n';
+//    std::cout << "------ Updated Vertex Array for Stars: " << currentVAIndex / VERTS_IN_QUAD << " ------" << '\n';
 }

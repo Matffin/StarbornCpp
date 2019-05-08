@@ -32,9 +32,13 @@ void Game::draw(float dtAsSeconds)
         m_Window.draw(*vAStars, states);
     }
     
+    m_Window.draw(galaxy_OriginSprite);
+    m_Window.draw(galaxy_CenterSprite);
+    m_Window.draw(galaxy_EndSprite);
+    
     //third on top draw the hud
     m_Window.setView(m_HudView);
-    
+
     //fps
     hud_text_fps.setString(std::to_string(1 / dtAsSeconds));
     m_Window.draw(hud_text_fps);

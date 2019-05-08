@@ -37,10 +37,30 @@ Game::Game()
     //load star texture once
     stars_Texture = TextureHolder::GetTexture(
             Utility::GetWorkingDirectory() + R"(\Content\Graphics\sun.png)");
-
+    
+    //Helper
+    galaxy_OriginTexture = TextureHolder::GetTexture(
+            Utility::GetWorkingDirectory() + R"(\Content\Graphics\origin.png)");
+    galaxy_OriginSprite.setTexture(galaxy_OriginTexture);
+    galaxy_OriginSprite.setPosition(0.f, 0.f);
+    galaxy_OriginSprite.setScale(0.2f, 0.2f);
+    galaxy_EndTexture = TextureHolder::GetTexture(
+            Utility::GetWorkingDirectory() + R"(\Content\Graphics\end.png)");
+    galaxy_EndSprite.setTexture(galaxy_EndTexture);
+    galaxy_EndSprite.setPosition(galaxySize - galaxy_EndSprite.getLocalBounds().width,
+                                 galaxySize - galaxy_EndSprite.getLocalBounds().height);
+    galaxy_EndSprite.setScale(0.2f, 0.2f);
+    galaxy_CenterTexture = TextureHolder::GetTexture(
+            Utility::GetWorkingDirectory() + R"(\Content\Graphics\center.png)");
+    galaxy_CenterSprite.setTexture(galaxy_CenterTexture);
+    galaxy_CenterSprite.setPosition((galaxySize / 2.f) - (galaxy_CenterSprite.getLocalBounds().width / 2.f),
+                                    (galaxySize / 2.f) - (galaxy_CenterSprite.getLocalBounds().width / 2.f));
+    galaxy_CenterSprite.setScale(0.2f, 0.2f);
+    
+    
     //call the star manager to start creating
     ManagerM::getInstance().getStarManager()->createStarGalaxy(starAmount, galaxySize, true);
-
+    
     //Initialize HUD
     hud_font.loadFromFile(Utility::GetWorkingDirectory() + R"(\Content\Fonts\SourceCodePro-Regular.ttf)");
     hud_text_fps = sf::Text("XX", hud_font);
