@@ -16,8 +16,8 @@ bool GalaxyBackground::createBackground(const std::string &filename, sf::Vector2
             Utility::GetWorkingDirectory() + filename);
     
     //const values
-    const int TILE_PX_SIZE_X = 1920;
-    const int TILE_PX_SIZE_Y = 1080;
+    const int TILE_PX_SIZE_X = 1280;
+    const int TILE_PX_SIZE_Y = 720;
     const int FINAL_PX_SIZE_X = 1280;
     const int FINAL_PX_SIZE_Y = 720;
     const int VERTS_IN_QUAD = 4;

@@ -105,8 +105,8 @@ void StarManager::createStarGalaxy(const uint32_t &max_stars, const uint32_t &ga
         currentVertex = currentVertex + VERTS_IN_QUAD;
     }
     
-    std::cout << "+++ Created new Stars: " << max_stars << " | Vertex Array Size: " << m_VAStars.getVertexCount()
-              << " ---\n";
+//    std::cout << "+++ Created new Stars: " << max_stars << " | Vertex Array Size: " << m_VAStars.getVertexCount()
+//              << " ---\n";
     
     if (positionStarsInGalaxy)
     {
@@ -397,7 +397,8 @@ StarManager::generateStarArm(uint32_t maxStars, float armLength, float angle, sf
     //the distributions for x-y positions and the (x) value of the curve function
     std::normal_distribution<float> ySpread{armLength + armLength, armLength / 2.f};
     std::normal_distribution<float> xSpread{0.f, GALAXY_SPIRAL_ARMSWIDTH};
-    std::uniform_real_distribution<float> spiralArm{3.f, 4.f};
+    std::uniform_real_distribution<float> xMaxCurve{3.f, 4.f};
+    std::uniform_real_distribution<float> exponentCurve{3.f, 0};
     
     //--------------------------------------------------------------------------------------------------------------------------------------------
     //iterate over the stars
@@ -416,10 +417,10 @@ StarManager::generateStarArm(uint32_t maxStars, float armLength, float angle, sf
         //spiral arm function
         
         //this function is 2^X. this curve raises exponentially. around x=8,9 the rise goes over 1
-//        float xPlus = pow(2.f, Utility::Remap(starsInArm[s].y, 0.f, armLength, 0.f, spiralArm(gen)));
+//        float xPlus = pow(2.f, Utility::Remap(starsInArm[s].y, 0.f, armLength, 0.f, xMaxCurve(gen)));
         
         //this function is x^3. this curve also raises exponentially but a little more even.
-        float xPlus = pow(Utility::Remap(starsInArm[s].y, 0.f, armLength, 0.f, spiralArm(gen)), 3.f);
+        float xPlus = pow(Utility::Remap(starsInArm[s].y, 0.f, armLength, 0.f, xMaxCurve(gen)), 3.f);
         //add the x translation calculated by the curve
         starsInArm[s].x += xPlus;
         

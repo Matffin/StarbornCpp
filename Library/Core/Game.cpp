@@ -33,7 +33,7 @@ Game::Game()
     m_GalaxyBackgroundView.reset(sf::FloatRect(0, 0, resolution.x, resolution.y));
     
     //create background with vertex array. pass background texture path
-    gBackground.createBackground(R"(\Content\Graphics\bg_galaxy.jpg)", sf::Vector2f(1, 1));
+    gBackground.createBackground(R"(\Content\Graphics\bg_space.jpg)", sf::Vector2f(1, 1));
     
     //Create some stars :)
 //    std::cout << "Galaxy Cood. Size: " << galaxySize << '\n';
