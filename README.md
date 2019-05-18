@@ -35,6 +35,7 @@ as the project and named "SFML-2.5.1". The "CMakeLists" file searches in the par
 set(SFML_DIR ...)
 ``` 
 line inside the "CMakeLists" file needs to be adjusted accordingly. You can also hard-code the path to your specific SFML folder. Just copy it from the windows explorer and paste it into the SFML Dir. 
+Be sure to point it to the folder: **"SFML-2.5.1/lib/cmake/SFML"** inside your SFML 2.5.1 folder.
 
 - On windows, the SFML library needs to be built with the MinGW compiler, version 7.3.0. The IDE needs to be set to use this compiler. Then the project can be build using CMake and the 
 provided "CMakeLists" file. 
