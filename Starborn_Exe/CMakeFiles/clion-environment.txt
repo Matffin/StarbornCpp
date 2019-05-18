@@ -1,0 +1,4 @@
+ToolSet: w64 6.0 (local)@E:\05_Tools\MinGW_7.3\mingw32
+Options: 
+
+Options:

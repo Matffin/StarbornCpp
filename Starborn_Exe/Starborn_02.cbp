@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Starborn_02"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\SFML-2.5.1\;CMake Files\..\SFML-2.5.1\lib\;CMake Files\..\SFML-2.5.1\lib\cmake\;CMake Files\..\SFML-2.5.1\lib\cmake\SFML\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="E:/05_Tools/MinGW_7.3/mingw32/bin/mingw32-make.exe -f &quot;E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="E:/05_Tools/MinGW_7.3/mingw32/bin/mingw32-make.exe -f &quot;E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="E:/05_Tools/MinGW_7.3/mingw32/bin/mingw32-make.exe -f &quot;E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="E:/05_Tools/MinGW_7.3/mingw32/bin/mingw32-make.exe -f &quot;E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Starborn">
+				<Option output="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug/Starborn.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DSFML_STATIC"/>
+					<Add directory="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project"/>
+					<Add directory="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/Library"/>
+					<Add directory="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/SFML-2.5.1/include"/>
+					<Add directory="E:/05_Tools/MinGW_7.3/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/include/c++"/>
+					<Add directory="E:/05_Tools/MinGW_7.3/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/include/c++/i686-w64-mingw32"/>
+					<Add directory="E:/05_Tools/MinGW_7.3/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/include/c++/backward"/>
+					<Add directory="E:/05_Tools/MinGW_7.3/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/include"/>
+					<Add directory="E:/05_Tools/MinGW_7.3/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/include-fixed"/>
+					<Add directory="E:/05_Tools/MinGW_7.3/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/../../../../i686-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="E:/05_Tools/MinGW_7.3/mingw32/bin/mingw32-make.exe -f &quot;E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 Starborn"/>
+					<CompileFile command="E:/05_Tools/MinGW_7.3/mingw32/bin/mingw32-make.exe -f &quot;E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="E:/05_Tools/MinGW_7.3/mingw32/bin/mingw32-make.exe -f &quot;E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="E:/05_Tools/MinGW_7.3/mingw32/bin/mingw32-make.exe -f &quot;E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Starborn/fast">
+				<Option output="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug/Starborn.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DSFML_STATIC"/>
+					<Add directory="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project"/>
+					<Add directory="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/Library"/>
+					<Add directory="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/SFML-2.5.1/include"/>
+					<Add directory="E:/05_Tools/MinGW_7.3/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/include/c++"/>
+					<Add directory="E:/05_Tools/MinGW_7.3/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/include/c++/i686-w64-mingw32"/>
+					<Add directory="E:/05_Tools/MinGW_7.3/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/include/c++/backward"/>
+					<Add directory="E:/05_Tools/MinGW_7.3/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/include"/>
+					<Add directory="E:/05_Tools/MinGW_7.3/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/include-fixed"/>
+					<Add directory="E:/05_Tools/MinGW_7.3/mingw32/bin/../lib/gcc/i686-w64-mingw32/7.3.0/../../../../i686-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="E:/05_Tools/MinGW_7.3/mingw32/bin/mingw32-make.exe -f &quot;E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 Starborn/fast"/>
+					<CompileFile command="E:/05_Tools/MinGW_7.3/mingw32/bin/mingw32-make.exe -f &quot;E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="E:/05_Tools/MinGW_7.3/mingw32/bin/mingw32-make.exe -f &quot;E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="E:/05_Tools/MinGW_7.3/mingw32/bin/mingw32-make.exe -f &quot;E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="E:/05_Tools/MinGW_7.3/mingw32/bin/mingw32-make.exe -f &quot;E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="E:/05_Tools/MinGW_7.3/mingw32/bin/mingw32-make.exe -f &quot;E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="E:/05_Tools/MinGW_7.3/mingw32/bin/mingw32-make.exe -f &quot;E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="E:/05_Tools/MinGW_7.3/mingw32/bin/mingw32-make.exe -f &quot;E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="E:/05_Tools/MinGW_7.3/mingw32/bin/mingw32-make.exe -f &quot;E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="E:/05_Tools/MinGW_7.3/mingw32/bin/mingw32-make.exe -f &quot;E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="E:/05_Tools/MinGW_7.3/mingw32/bin/mingw32-make.exe -f &quot;E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="E:/05_Tools/MinGW_7.3/mingw32/bin/mingw32-make.exe -f &quot;E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/Library/Core/Draw.cpp">
+			<Option target="Starborn"/>
+		</Unit>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/Library/Core/Game.cpp">
+			<Option target="Starborn"/>
+		</Unit>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/Library/Core/Game.h">
+			<Option target="Starborn"/>
+		</Unit>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/Library/Core/Input.cpp">
+			<Option target="Starborn"/>
+		</Unit>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/Library/Core/Update.cpp">
+			<Option target="Starborn"/>
+		</Unit>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/Library/Galaxy/GalaxyBackground.cpp">
+			<Option target="Starborn"/>
+		</Unit>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/Library/Galaxy/GalaxyBackground.h">
+			<Option target="Starborn"/>
+		</Unit>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/Library/M/ManagerM.cpp">
+			<Option target="Starborn"/>
+		</Unit>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/Library/M/ManagerM.h">
+			<Option target="Starborn"/>
+		</Unit>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/Library/Stars/RotationSystem.cpp">
+			<Option target="Starborn"/>
+		</Unit>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/Library/Stars/RotationSystem.h">
+			<Option target="Starborn"/>
+		</Unit>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/Library/Stars/StarManager.cpp">
+			<Option target="Starborn"/>
+		</Unit>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/Library/Stars/StarManager.h">
+			<Option target="Starborn"/>
+		</Unit>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/Library/TextureHolder/TextureHolder.cpp">
+			<Option target="Starborn"/>
+		</Unit>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/Library/TextureHolder/TextureHolder.h">
+			<Option target="Starborn"/>
+		</Unit>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/main.cpp">
+			<Option target="Starborn"/>
+		</Unit>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/../SFML-2.5.1/lib/cmake/SFML/SFMLConfig.cmake">
+			<Option virtualFolder="CMake Files\..\SFML-2.5.1\lib\cmake\SFML\"/>
+		</Unit>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/../SFML-2.5.1/lib/cmake/SFML/SFMLConfigDependencies.cmake">
+			<Option virtualFolder="CMake Files\..\SFML-2.5.1\lib\cmake\SFML\"/>
+		</Unit>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/../SFML-2.5.1/lib/cmake/SFML/SFMLConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\SFML-2.5.1\lib\cmake\SFML\"/>
+		</Unit>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/../SFML-2.5.1/lib/cmake/SFML/SFMLStaticTargets-debug.cmake">
+			<Option virtualFolder="CMake Files\..\SFML-2.5.1\lib\cmake\SFML\"/>
+		</Unit>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/../SFML-2.5.1/lib/cmake/SFML/SFMLStaticTargets-release.cmake">
+			<Option virtualFolder="CMake Files\..\SFML-2.5.1\lib\cmake\SFML\"/>
+		</Unit>
+		<Unit filename="E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/../SFML-2.5.1/lib/cmake/SFML/SFMLStaticTargets.cmake">
+			<Option virtualFolder="CMake Files\..\SFML-2.5.1\lib\cmake\SFML\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

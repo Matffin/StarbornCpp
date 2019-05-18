@@ -1,0 +1,5 @@
+"E:\01_Program Files\Jetbrains\apps\CLion\ch-0\191.7141.37\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" "E:\02_Dateien\05. GAME Projects\00. University\C++Game\RittMartin_Cpp_Submission\Starborn_Project"
+-- Found SFML 2.5.1 in E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/SFML-2.5.1/lib/cmake/SFML
+-- Configuring done
+-- Generating done
+-- Build files have been written to: E:/02_Dateien/05. GAME Projects/00. University/C++Game/RittMartin_Cpp_Submission/Starborn_Project/cmake-build-debug
