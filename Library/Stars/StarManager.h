@@ -40,7 +40,10 @@ public:
     
     //returns reference to the vertex array for the stars
     sf::VertexArray &getVAStars() { return m_VAStars; }
-
+    
+    //used to transfer all the generated star positions from randomizeStarGalaxy to the vertex array displaying the stars
+    void updateVAStars(std::vector<sf::Vector2f> &starPositions);
+    
 private:
     
     //ECS container for all the star entities
@@ -50,11 +53,18 @@ private:
     
     //Some general star values
     const sf::Vector2f STARS_POOLPOSITION = sf::Vector2f(-100.f, -100.f);
-    const float STARS_MEDIANSIZE = 2.5f; //the size of one single star
+    const float STARS_SIZE_MIN = 0.5f; //the size of one single star
+    const float STARS_SIZE_MAX = 3.f;
     const sf::Vector2f STARS_TEXTURESIZE = sf::Vector2f(128.f, 128.f); //the texture size of the star texture
-    const int GALAXY_CORE_SPHERESAMOUNT = 9;
-    const float GALAXY_CORE_SPHERE_SIZE_MIN = 50.f;
-    const float GALAXY_CORE_SPHERE_SIZE_MAX = 200.f;
+    //GC
+    const int GALAXY_CORE_SPHERESAMOUNT = 5;
+    const float GALAXY_CORE_SPHERE_SIZE_MIN = 200.f;
+    const float GALAXY_CORE_SPHERE_SIZE_MAX = 300.f;
+    //Spirals
+    const int GALAXY_SPIRAL_ARMSAMOUNT = 8;
+    const float GALAXY_SPIRAL_ARMSLENGTH = 300.f;
+    const float GALAXY_SPIRAL_ARMSWIDTH = 50.f;
+    //Colors
     const sf::Color POSSIBLE_COLORS[3] = {sf::Color(4, 93, 250, 255), sf::Color(255, 0, 204, 255), sf::Color::White};
     
     //Generates a 2 dimensional unsorted array of star positions. unsorted because positions are generated random to use normal distribution. 2 dimensional because maybe in the future
@@ -63,12 +73,16 @@ private:
     generateGalacticCore(uint32_t maxStars, const uint32_t &galaxySize, const uint8_t &spheresAmount, std::mt19937 gen);
     
     //used in the galaxy core to create a normal distributed 2d sphere of star positions
-    //several of theses spheres are then randomly stiched together to form an unhomogenous shape for the galaxy core.
+    //several of theses spheres are then randomly stitched together to form an non-homogeneous shape for the galaxy core.
     std::vector<sf::Vector2f>
     generateStarSphere(uint32_t maxStars, sf::Vector2f &sphereSize, sf::Vector2f &offset, std::mt19937 gen);
     
-    //TODO create galaxy spiral arms
+    //generates the given amount of arms for the spiral galaxy
+    std::vector<std::vector<sf::Vector2f> >
+    generateSpiralArms(uint32_t maxStars, const uint32_t &galaxySize, int armsAmount, std::mt19937 &gen);
     
-    //used to transfer all the generated star positions from randomizeStarGalaxy to the vertex array displaying the stars
-    void updateVAStars(std::vector<sf::Vector2f> &starPositions);
+    //generates a single galaxy arm by creating a single line of stars. randomize their positions a little, then
+    //arcs the arm with a given function
+    std::vector<sf::Vector2f>
+    generateStarArm(uint32_t maxStars, float armLength, float angle, sf::Vector2f &posOffset, std::mt19937 &gen);
 };

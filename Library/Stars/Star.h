@@ -46,4 +46,42 @@ public:
     };
 };
 
+class StarRotation
+{
+private:
+    float m_RotationSpeed;
+
+public:
+    StarRotation(float rot)
+    {
+        m_RotationSpeed = rot;
+    };
+    
+    //reference as could be accessed often
+    float &GetRot() { return m_RotationSpeed; };
+    
+    void SetRot(float rot)
+    {
+        m_RotationSpeed = rot;
+    };
+};
+
+class StarColor
+{
+private:
+    sf::Color m_Color;
+public:
+    StarColor(sf::Color c)
+    {
+        m_Color = c;
+    };
+    
+    sf::Color &GetColor() { return m_Color; };
+    
+    void SetColor(sf::Color c)
+    {
+        m_Color = c;
+    };
+};
+
 #endif //STARBORN_02_STAR_H

@@ -4,7 +4,9 @@ project(Starborn_02)
 set(CMAKE_CXX_STANDARD 17)
 
 #get sfml
-set(SFML_DIR "E:/02_Dateien/05. GAME Projects/00. University/C++Game/03_ SFML_Stuff/SFML-2.5.1-windows-gcc-7.3.0-mingw-32-bit/SFML-2.5.1/lib/cmake/SFML")
+#set(SFML_DIR "E:/02_Dateien/05. GAME Projects/00. University/C++Game/03_ SFML_Stuff/SFML-2.5.1-windows-gcc-7.3.0-mingw-32-bit/SFML-2.5.1/lib/cmake/SFML")
+#set(SFML_DIR "D:/Students/MartinR/SFML-2.5.1/lib/cmake/SFML")
+set(SFML_DIR ${PROJECT_SOURCE_DIR} "/../SFML-2.5.1/lib/cmake/SFML")
 
 set(SFML_STATIC_LIBRARIES TRUE)
 set(CMAKE_EXE_LINKER_FLAGS "-static")
@@ -32,7 +34,7 @@ set(SOURCE_FILES main.cpp
         Library/M/ManagerM.cpp
         Library/TextureHolder/TextureHolder.cpp
         Library/Stars/StarManager.cpp
-        Library/Galaxy/GalaxyBackground.cpp)
+        Library/Galaxy/GalaxyBackground.cpp Library/Stars/RotationSystem.cpp Library/Stars/RotationSystem.h)
 
 #set(HEADER_FILES Library/Utility/Utilities.h Library/Utility/RandomGenerator.h Library/Utility/Helpers.h Library/TextureHolder/TextureHolder.h Library/TextureHolder/TextureHolder.cpp Library/Core/Game.h Library/Core/Game.cpp Library/Core/Input.cpp Library/Core/Update.cpp Library/Core/Draw.cpp)
 

@@ -11,7 +11,7 @@
 void Game::input()
 {
     //create the sfml event and catch the input events
-    sf::Event event;
+    sf::Event event{};
     while (m_Window.pollEvent(event))
     {
         //----KEYBOARD-------------------------------------------------
@@ -34,7 +34,41 @@ void Game::input()
                 std::mt19937 gen(time(nullptr));
                 ManagerM::getInstance().getStarManager()->randomizeStarGalaxy(gen, galaxySize);
             }
+
+            //rotation system control
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+            {
+                rotation_system_speed += .1f;
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+            {
+                rotation_system_speed -= .1f;
+            }
+
+            //Shader control
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::J)){
+                useShader = !useShader;
+                shader_sim_Time = 0.f;
+                //std::cout << "setting shader " << useShader << '\n';
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::U))
+            {
+                shader_sim_Speed += .1f;
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
+            {
+                shader_sim_Speed -= .1f;
+            }
             
+            //helper sprites control
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::G)){
+                useHelper = !useHelper;
+            }
+            //HUD helper
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::H)){
+                hud_show = !hud_show;
+            }
+
             //recalculate the movement speed of the map by remapping it using the zoomLevel
             //the closest possible zoom will result in the smallest possible movement speed
             //the far-outest possible zoom will result in the highest possible movement speed
@@ -102,7 +136,8 @@ void Game::input()
             if (event.mouseButton.button == sf::Mouse::Left)
             {
                 drag_moving = true;
-                drag_oldPos = m_Window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y), m_GalaxyView);
+                drag_oldPos = m_Window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y),
+                                                        m_GalaxyView);
             }
         }
         if (event.type == sf::Event::MouseButtonReleased)
@@ -117,7 +152,8 @@ void Game::input()
         {
             //Drag Moving
             // Determine the new position in world coordinates
-            const sf::Vector2f newPos = m_Window.mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y), m_GalaxyView);
+            const sf::Vector2f newPos = m_Window.mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y),
+                                                                  m_GalaxyView);
             // Determine how the cursor has moved
             const sf::Vector2f deltaPos = drag_oldPos - newPos;
             

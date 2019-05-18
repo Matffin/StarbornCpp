@@ -7,6 +7,7 @@
 //External
 #include <SFML/Graphics.hpp>
 #include <ECS/entt.hpp>
+#include <Library/Stars/RotationSystem.h>
 
 //Managers
 #include "TextureHolder/TextureHolder.h"
@@ -39,27 +40,42 @@ private:
     GalaxyBackground gBackground;
     
     //--------------------------------------------------------------------------------------------------------------------------------------------
+    bool hud_show{false};
     //HUD sfml elements
     sf::Font hud_font;
     //HUD text
     sf::Text hud_text_fps;
+    sf::Text hud_text_starsAmount;
+    sf::Text hud_text_stars;
+    sf::Text hud_text_useShader;
+    sf::Text hud_text_rotationSpeed;
+    sf::Text hud_text_shaderSpeed;
     
     //--------------------------------------------------------------------------------------------------------------------------------------------
     //play pause switch
-    bool m_Playing = false;
+    bool m_Playing = true;
     //total game time storage
     sf::Time m_GameTimeTotal;
+    float rotation_system_speed
+    {0.f};
+    float shader_sim_Time{0.f};
+    float shader_sim_Speed{1.f};
     
     //--------------------------------------------------------------------------------------------------------------------------------------------
     //Stars
     //total stars in galaxy as 32 unsinged int for possible high values
-    uint32_t starAmount = static_cast<uint32_t>(1e4);
+    uint32_t starAmount = static_cast<uint32_t>(1e5);
     //galaxy size
-    uint32_t galaxySize = static_cast<uint32_t>(5e2);
+    uint32_t galaxySize = static_cast<uint32_t>(6e2);
     
     //Stars texture pointer for easier reuse
     sf::Texture stars_Texture;
+    //shader
+    bool useShader {false};
+    sf::Shader shader = sf::Shader();
     
+    //helper sprites that show the size of the galaxy.
+    bool useHelper{false};
     sf::Texture galaxy_OriginTexture;
     sf::Texture galaxy_EndTexture;
     sf::Texture galaxy_CenterTexture;
@@ -67,13 +83,16 @@ private:
     sf::Sprite galaxy_EndSprite;
     sf::Sprite galaxy_CenterSprite;
     
+    //Stars System
+    RotationSystem rSystem;
+
     //--------------------------------------------------------------------------------------------------------------------------------------------
     //Map
     //Start zoom level
     int map_zoomLevel{0};
     //max zoom values
     int map_maxZoom{-25};
-    int map_minZoom{7};
+    int map_minZoom{10};
     //zoom factor
     float map_zoomFactor{1.2f};
     

@@ -13,6 +13,8 @@ void Game::update(float dtAsSeconds)
 {
     if (m_Playing)
     {
-    
+        if(!useShader) {
+            rSystem.updateSystem(rotation_system_speed, sf::Vector2f(galaxySize / 2.f, galaxySize / 2.f));
+        }
     }//endif playing
 }

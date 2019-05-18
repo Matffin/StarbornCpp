@@ -13,6 +13,9 @@ Game::Game()
     
     TextureHolder tH = TextureHolder();
     
+    rSystem = RotationSystem();
+    rSystem.startSystem();
+    
     // Get the screen resolution
     // and create an SFML window
     sf::Vector2f resolution;
@@ -25,7 +28,7 @@ Game::Game()
     
     //initialize the views
     m_GalaxyView.setSize(resolution);
-    m_GalaxyView.move(-(resolution.x / 2), -(resolution.y / 2));
+    m_GalaxyView.move(-(galaxySize / 2.f), -(galaxySize / 2.f));
     m_HudView.reset(sf::FloatRect(0, 0, resolution.x, resolution.y));
     m_GalaxyBackgroundView.reset(sf::FloatRect(0, 0, resolution.x, resolution.y));
     
@@ -37,6 +40,8 @@ Game::Game()
     //load star texture once
     stars_Texture = TextureHolder::GetTexture(
             Utility::GetWorkingDirectory() + R"(\Content\Graphics\sun.png)");
+    shader.loadFromFile(Utility::GetWorkingDirectory() + R"(\Content\Shader\rotation_vertex_shader.vert)",
+                        sf::Shader::Vertex);
     
     //Helper
     galaxy_OriginTexture = TextureHolder::GetTexture(
@@ -47,14 +52,14 @@ Game::Game()
     galaxy_EndTexture = TextureHolder::GetTexture(
             Utility::GetWorkingDirectory() + R"(\Content\Graphics\end.png)");
     galaxy_EndSprite.setTexture(galaxy_EndTexture);
-    galaxy_EndSprite.setPosition(galaxySize - galaxy_EndSprite.getLocalBounds().width,
-                                 galaxySize - galaxy_EndSprite.getLocalBounds().height);
+    galaxy_EndSprite.setPosition(galaxySize - (galaxy_EndSprite.getLocalBounds().width * 0.2f),
+                                 galaxySize - (galaxy_EndSprite.getLocalBounds().height * 0.2f));
     galaxy_EndSprite.setScale(0.2f, 0.2f);
     galaxy_CenterTexture = TextureHolder::GetTexture(
             Utility::GetWorkingDirectory() + R"(\Content\Graphics\center.png)");
     galaxy_CenterSprite.setTexture(galaxy_CenterTexture);
-    galaxy_CenterSprite.setPosition((galaxySize / 2.f) - (galaxy_CenterSprite.getLocalBounds().width / 2.f),
-                                    (galaxySize / 2.f) - (galaxy_CenterSprite.getLocalBounds().width / 2.f));
+    galaxy_CenterSprite.setPosition((galaxySize / 2.f) - (galaxy_CenterSprite.getLocalBounds().width / 2.f) * 0.2f,
+                                    (galaxySize / 2.f) - (galaxy_CenterSprite.getLocalBounds().width / 2.f) * 0.2f);
     galaxy_CenterSprite.setScale(0.2f, 0.2f);
     
     
@@ -63,10 +68,41 @@ Game::Game()
     
     //Initialize HUD
     hud_font.loadFromFile(Utility::GetWorkingDirectory() + R"(\Content\Fonts\SourceCodePro-Regular.ttf)");
+    //
     hud_text_fps = sf::Text("XX", hud_font);
     hud_text_fps.setCharacterSize(30);
     hud_text_fps.setStyle(sf::Text::Regular);
     hud_text_fps.setFillColor(sf::Color::White);
+    //
+    hud_text_stars = sf::Text("Star Amount: ", hud_font);
+    hud_text_stars.setCharacterSize(20);
+    hud_text_stars.setStyle(sf::Text::Regular);
+    hud_text_stars.setFillColor(sf::Color::White);
+    hud_text_stars.setPosition(0.f, 50.f);
+    //
+    hud_text_starsAmount = sf::Text(std::to_string(starAmount), hud_font);
+    hud_text_starsAmount.setCharacterSize(20);
+    hud_text_starsAmount.setStyle(sf::Text::Regular);
+    hud_text_starsAmount.setFillColor(sf::Color::White);
+    hud_text_starsAmount.setPosition(0.f, 75.f);
+    //
+    hud_text_useShader = sf::Text("Using Rotation System", hud_font);
+    hud_text_useShader.setCharacterSize(15);
+    hud_text_useShader.setStyle(sf::Text::Regular);
+    hud_text_useShader.setFillColor(sf::Color::White);
+    hud_text_useShader.setPosition(resolution.x - 300.f, resolution.y - 100.f);
+    //
+    hud_text_rotationSpeed = sf::Text("XX", hud_font);
+    hud_text_rotationSpeed.setCharacterSize(10);
+    hud_text_rotationSpeed.setStyle(sf::Text::Regular);
+    hud_text_rotationSpeed.setFillColor(sf::Color::White);
+    hud_text_rotationSpeed.setPosition(resolution.x - 300.f, resolution.y - 75.f);
+    //
+    hud_text_shaderSpeed = sf::Text("XX", hud_font);
+    hud_text_shaderSpeed.setCharacterSize(10);
+    hud_text_shaderSpeed.setStyle(sf::Text::Regular);
+    hud_text_shaderSpeed.setFillColor(sf::Color::White);
+    hud_text_shaderSpeed.setPosition(resolution.x - 300.f, resolution.y - 50.f);
 }
 
 //-------------------

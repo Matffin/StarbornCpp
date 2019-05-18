@@ -4,6 +4,7 @@
 
 #include "Stars/StarManager.h"
 #include "M/ManagerM.h"
+#include <math.h>
 
 StarManager::StarManager() = default;
 
@@ -60,19 +61,27 @@ void StarManager::createStarGalaxy(const uint32_t &max_stars, const uint32_t &ga
         m_Stars.assign<StarPosition>(entity, STARS_POOLPOSITION.x, STARS_POOLPOSITION.y);
         
         //--------------------------------------------------------------------------------------------------------------------------------------------
+        //Rotation
+        std::uniform_real_distribution<float> rotValues{0.5f, 1.5f};
+        float rot = rotValues(gen);
+        m_Stars.assign<StarRotation>(entity, rot);
+        
+        
+        //--------------------------------------------------------------------------------------------------------------------------------------------
         //Color
         sf::Color col = POSSIBLE_COLORS[colorsPossible(gen)];
+        m_Stars.assign<StarColor>(entity, col);
         
         //--------------------------------------------------------------------------------------------------------------------------------------------
         //Vertex Array
-        sf::Vector2f xZero_yZero = sf::Vector2f(STARS_POOLPOSITION.x - (STARS_MEDIANSIZE / 2),
-                                                STARS_POOLPOSITION.y - (STARS_MEDIANSIZE / 2));
-        sf::Vector2f xOne_yZero = sf::Vector2f(STARS_POOLPOSITION.x + (STARS_MEDIANSIZE / 2),
-                                               STARS_POOLPOSITION.y - (STARS_MEDIANSIZE / 2));
-        sf::Vector2f xOne_yOne = sf::Vector2f(STARS_POOLPOSITION.x + (STARS_MEDIANSIZE / 2),
-                                              STARS_POOLPOSITION.y + (STARS_MEDIANSIZE / 2));
-        sf::Vector2f xZero_yOne = sf::Vector2f(STARS_POOLPOSITION.x - (STARS_MEDIANSIZE / 2),
-                                               STARS_POOLPOSITION.y + (STARS_MEDIANSIZE / 2));
+        sf::Vector2f xZero_yZero = sf::Vector2f(STARS_POOLPOSITION.x - (STARS_SIZE_MIN / 2),
+                                                STARS_POOLPOSITION.y - (STARS_SIZE_MIN / 2));
+        sf::Vector2f xOne_yZero = sf::Vector2f(STARS_POOLPOSITION.x + (STARS_SIZE_MIN / 2),
+                                               STARS_POOLPOSITION.y - (STARS_SIZE_MIN / 2));
+        sf::Vector2f xOne_yOne = sf::Vector2f(STARS_POOLPOSITION.x + (STARS_SIZE_MIN / 2),
+                                              STARS_POOLPOSITION.y + (STARS_SIZE_MIN / 2));
+        sf::Vector2f xZero_yOne = sf::Vector2f(STARS_POOLPOSITION.x - (STARS_SIZE_MIN / 2),
+                                               STARS_POOLPOSITION.y + (STARS_SIZE_MIN / 2));
         //position the vertex in the in each quad
         //X=0 Y=0
         m_VAStars[currentVertex + 0].position = sf::Vector2f(xZero_yZero);
@@ -97,8 +106,7 @@ void StarManager::createStarGalaxy(const uint32_t &max_stars, const uint32_t &ga
     }
     
     std::cout << "+++ Created new Stars: " << max_stars << " | Vertex Array Size: " << m_VAStars.getVertexCount()
-              << " | Example Pos: " << m_VAStars[currentVertex - VERTS_IN_QUAD].position.x
-              << m_VAStars[currentVertex - VERTS_IN_QUAD].position.y << " ---\n";
+              << " ---\n";
     
     if (positionStarsInGalaxy)
     {
@@ -116,9 +124,8 @@ void StarManager::randomizeStarGalaxy(std::mt19937 &generator, const uint32_t &g
     
     //storage for the new star positions
     std::vector<sf::Vector2f> starPositions(viewStars.size());
-    
-    std::cout << "|||||| Randomizing Star Positions for: " << starPositions.size() << '\n';
-    int size = viewStars.size() / 8;
+
+//    std::cout << "|||||| Randomizing Star Positions for: " << starPositions.size() << '\n';
     
     /*
      * idea is 3x3 matrix for possible chunks of star spheres.
@@ -126,10 +133,11 @@ void StarManager::randomizeStarGalaxy(std::mt19937 &generator, const uint32_t &g
      * this creates a cluster of stars that looks non-spherical. as a few smaller spheres overlap.
      */
     
-    
     //--------------------------------------------------------------------------------------------------------------------------------------------
     //the amount of stars in the core should currently be all the stars
-    int coreStarAmount = viewStars.size();
+    int spiralStarAmount = viewStars.size() / 2;
+    int coreStarAmount = viewStars.size() / 2;
+    
     //Generate the positions for the galactic core
     std::vector<std::vector<sf::Vector2f> > galacticCore = generateGalacticCore(coreStarAmount,
                                                                                 galaxySize,
@@ -141,9 +149,25 @@ void StarManager::randomizeStarGalaxy(std::mt19937 &generator, const uint32_t &g
     //transfer the star positions from the 2dimensional array given by the galaxy core into the 1dimensional for further processing
     //use index here as emplace_back is very slow
     int starIndex = 0;
-    for (auto itSphere : galacticCore)
+    for (const auto &itSphere : galacticCore)
     {
         for (auto itStars : itSphere)
+        {
+            starPositions[starIndex] = itStars;
+            ++starIndex;
+        }
+    }
+    //generate spiral arms
+    std::vector<std::vector<sf::Vector2f> > spiralArms = generateSpiralArms(spiralStarAmount, galaxySize,
+                                                                            GALAXY_SPIRAL_ARMSAMOUNT, generator);
+
+//    std::cout << "Star index after gc: " << starIndex << " | amount of stars: " << starPositions.size() << '\n';
+    
+    //transfer the star positions from the 2dimensional array given by the galaxy spiral into the 1dimensional for further processing
+    //use index here as emplace_back is very slow
+    for (const auto &arm : spiralArms)
+    {
+        for (auto itStars : arm)
         {
             starPositions[starIndex] = itStars;
             ++starIndex;
@@ -160,6 +184,7 @@ void StarManager::randomizeStarGalaxy(std::mt19937 &generator, const uint32_t &g
         
         //std::cout << "--- New StarPosition: " << starPositions[index].x << "|" << starPositions[index].y << " ---" << '\n';
         sf::Vector2f currentPos = starPositions[index];
+        //give over star position
         starPos.SetPos(currentPos.x, currentPos.y);
         
         ++index;
@@ -170,6 +195,8 @@ void StarManager::randomizeStarGalaxy(std::mt19937 &generator, const uint32_t &g
     updateVAStars(starPositions);
 }
 
+//--------------------------------------------------------------------------------------------------------------------------------------------
+//Galactic Core
 std::vector<std::vector<sf::Vector2f> >
 StarManager::generateGalacticCore(uint32_t maxStars, const uint32_t &galaxySize, const uint8_t &spheresAmount,
                                   std::mt19937 gen)
@@ -189,7 +216,7 @@ StarManager::generateGalacticCore(uint32_t maxStars, const uint32_t &galaxySize,
     //calculate the start offset. so the galactic core is actually in the center. Take the half of the galaxy. then subtract
     //a third of the galaxy size as the grid is 9x9 but starting at 0 -> a third of the galaxySize is the half of the galactic Core
     //NOTE: the second part behind the - needs to be adjusted
-    sf::Vector2f startOffset{(galaxySize/2.f) - (galaxySize/3.f), (galaxySize/2.f) - (galaxySize/3.f)};
+    sf::Vector2f startOffset{(galaxySize / 2.f) - (galaxySize / 3.f), (galaxySize / 2.f) - (galaxySize / 3.f)};
     //calculate how many stars a single sphere can hold
     std::vector<sf::Vector2f> starsOnSpot(maxStars / spheresAmount, startOffset);
     //create a 2 dimensional array of positions. X holds the amount of spheres. Y holds the Star Positions for each sphere Xn
@@ -214,7 +241,7 @@ StarManager::generateGalacticCore(uint32_t maxStars, const uint32_t &galaxySize,
                       << (y * (size.y / 3.f) + startOffset.y) << '\n';*/
         }
     }
-    
+
 //    std::cout << "|||||| SpherePositions: " << spheresPositions.size() << '\n';
     
     //--------------------------------------------------------------------------------------------------------------------------------------------
@@ -261,7 +288,7 @@ StarManager::generateGalacticCore(uint32_t maxStars, const uint32_t &galaxySize,
     {
         //create a random sphereSize inside the range given
         sf::Vector2f sphereSize = sf::Vector2f(sizeDist(gen), sizeDist(gen));
-        sf::Vector2f spherePosition = sf::Vector2f(spheresPositions[i]);
+        auto spherePosition = sf::Vector2f(spheresPositions[i]);
 
 //        std::cout << "Generation for Sphere started with RandomID in Grid: " << i << " | Number of Sphere in Total: " << sphereIndexInGrid << " |Pos: "
 //                  << sf::Vector2f(spheresPositions[i]).x << ":"
@@ -314,8 +341,111 @@ StarManager::generateStarSphere(uint32_t maxStars, sf::Vector2f &sphereSize, sf:
     return sphereStars;
 }
 
+//--------------------------------------------------------------------------------------------------------------------------------------------
+//Spiral Arms
+std::vector<std::vector<sf::Vector2f> >
+StarManager::generateSpiralArms(uint32_t maxStars, const uint32_t &galaxySize, int armsAmount,
+                                std::mt19937 &gen)
+{
+    //--------------------------------------------------------------------------------------------------------------------------------------------
+    //calc angle between each arm
+    float angle = 360.f / armsAmount;
+    std::uniform_int_distribution<> possAngleOffsets{0, 360};
+    int angleOffset = possAngleOffsets(gen);
+//    std::cout << "Angle: " << angle << " | offset: " << offset << '\n';
+    
+    //--------------------------------------------------------------------------------------------------------------------------------------------
+    //calc center position of the galaxy
+    sf::Vector2f centerPosition{galaxySize / 2.f, galaxySize / 2.f};
+    
+    //--------------------------------------------------------------------------------------------------------------------------------------------
+    //calc stars per arm
+    std::vector<sf::Vector2f> starsPerArm(maxStars / armsAmount, centerPosition);
+    
+    //--------------------------------------------------------------------------------------------------------------------------------------------
+    //create 2d array holding all the stars
+    std::vector<std::vector<sf::Vector2f> > spiralArmsStarPositions(armsAmount, starsPerArm);
 
+//    std::cout << "Spiral Generation | StarsPerArm: " << starsPerArm.size() << " | SpiralArms: " << armsAmount
+//              << '\n';
 
+    //--------------------------------------------------------------------------------------------------------------------------------------------
+    //generate the spiral arms
+    for (int arm = 0; arm < armsAmount; ++arm)
+    {
+        //std::cout << "angle * arms: " << angle * arm << '\n';
+        spiralArmsStarPositions[arm] = generateStarArm(starsPerArm.size(), GALAXY_SPIRAL_ARMSLENGTH, angle * arm + angleOffset,
+                                                       centerPosition, gen);
+    }
+    
+    return spiralArmsStarPositions;
+}
+
+std::vector<sf::Vector2f>
+StarManager::generateStarArm(uint32_t maxStars, float armLength, float angle, sf::Vector2f &offset, std::mt19937 &gen)
+{
+    //--------------------------------------------------------------------------------------------------------------------------------------------
+    //container for return. fill with pool position
+    std::vector<sf::Vector2f> starsInArm = std::vector<sf::Vector2f>(maxStars, sf::Vector2f(STARS_POOLPOSITION.x,
+                                                                                            STARS_POOLPOSITION.y));
+    
+    //--------------------------------------------------------------------------------------------------------------------------------------------
+    //convert the angle to radians
+    float rad = angle * (M_PI / 180.f);
+    
+    //--------------------------------------------------------------------------------------------------------------------------------------------
+    //the distributions for x-y positions and the (x) value of the curve function
+    std::normal_distribution<float> ySpread{armLength + armLength, armLength / 2.f};
+    std::normal_distribution<float> xSpread{0.f, GALAXY_SPIRAL_ARMSWIDTH};
+    std::uniform_real_distribution<float> spiralArm{3.f, 4.f};
+    
+    //--------------------------------------------------------------------------------------------------------------------------------------------
+    //iterate over the stars
+    for (int s = 0; s < maxStars; ++s)
+    {
+        //--------------------------------------------------------------------------------------------------------------------------------------------
+        //Move stars down in a single line. use the ySpread to normal distribute them, so further out stars
+        //will be more sparsely
+        starsInArm[s].y += ySpread(gen); // s * (armLength / maxStars);
+    
+        //--------------------------------------------------------------------------------------------------------------------------------------------
+        //distribute stars on x axis. this will generate a less ordinary galaxy arm
+        starsInArm[s].x += xSpread(gen);
+        
+        //--------------------------------------------------------------------------------------------------------------------------------------------
+        //spiral arm function
+        
+        //this function is 2^X. this curve raises exponentially. around x=8,9 the rise goes over 1
+//        float xPlus = pow(2.f, Utility::Remap(starsInArm[s].y, 0.f, armLength, 0.f, spiralArm(gen)));
+        
+        //this function is x^3. this curve also raises exponentially but a little more even.
+        float xPlus = pow(Utility::Remap(starsInArm[s].y, 0.f, armLength, 0.f, spiralArm(gen)), 3.f);
+        //add the x translation calculated by the curve
+        starsInArm[s].x += xPlus;
+        
+        //std::cout << "Y: " << starsInArm[s].y << " | X: " << starsInArm[s].x << '\n';
+    
+        //--------------------------------------------------------------------------------------------------------------------------------------------
+        //move the stars to the galaxy center
+        starsInArm[s] += offset;
+    
+        //--------------------------------------------------------------------------------------------------------------------------------------------
+        //rotate stars to make the individual arms spread evenly in all directions
+        float xRotated =
+                cos(rad) * (starsInArm[s].x - offset.x) - sin(rad) * (starsInArm[s].y - offset.y) + offset.x;
+        float yRotated =
+                sin(rad) * (starsInArm[s].x - offset.x) + cos(rad) * (starsInArm[s].y - offset.y) + offset.y;
+        
+        //give over the new positions
+        starsInArm[s] = sf::Vector2f(xRotated, yRotated);
+    }
+    
+    //return
+    return starsInArm;
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+//VertexArray Update
 void StarManager::updateVAStars(std::vector<sf::Vector2f> &starPositions)
 {
     /*
@@ -336,13 +466,14 @@ void StarManager::updateVAStars(std::vector<sf::Vector2f> &starPositions)
     
     //--------------------------------------------------------------------------------------------------------------------------------------------
     //Scaling
-    std::uniform_real_distribution<float> xSizes{STARS_MEDIANSIZE - 3, STARS_MEDIANSIZE + 3};
+    std::uniform_real_distribution<float> xSizes{STARS_SIZE_MIN, STARS_SIZE_MAX};
     
     //--------------------------------------------------------------------------------------------------------------------------------------------
     //Fill in the positions
     int currentVAIndex = 0;
     for (auto position : starPositions)
     {
+        //generating the size here is dumb. generate it at the start and use a component for it :) TODO
         float size = xSizes(gen);
         sf::Vector2f starScale = sf::Vector2f(size, size);
         

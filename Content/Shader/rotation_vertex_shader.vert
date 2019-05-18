@@ -73,7 +73,7 @@ void main()
 //    mat2 m = mat2(c, -s, s, c);
     // transform the vertex position
 
-    vec4 center = vec4(768.3f,768.3f,0,1);
+    vec4 center = vec4(768.3f,768.3f,0,1); //768.3
 
     vec3 rotationAxis = vec3(0.0,0.0,1);
 
