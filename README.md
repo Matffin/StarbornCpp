@@ -47,4 +47,5 @@ The project has not been build on a mac yet so there could be unknown errors.
 ---
 
 With any questions, as this description is short and maybe confusing, please feel free to contact me: [contact@martinritt.de](mailto:contact@martinritt.de)
+Credit for the shader goes to : [Frank](https://github.com/comentator) & [Marc](https://github.com/Marc-Paul)
  

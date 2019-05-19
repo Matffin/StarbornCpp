@@ -1,3 +1,8 @@
+/*
+Shader Credit goes to Frank (https://github.com/comentator) and Marc (https://github.com/Marc-Paul)
+*/
+
+
 #extension GL_EXT_gpu_shader4 : enable
 
 uniform float dtAsSeconds;
