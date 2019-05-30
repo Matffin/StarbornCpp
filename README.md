@@ -1,5 +1,5 @@
 # StarbornCpp
-Little random spiral galaxy generator. Creates 100.000-star sprites and randomizes their position inside a given function, so it looks a bit like a galaxy. Uses the SFML library.
+Little random spiral galaxy generator. Creates 100.000-star sprites and randomizes their position inside a given function, so it looks a bit like a galaxy. Uses the SFML library. Uses the ['entt' ECS system by skypjack](https://github.com/skypjack/entt). 
 
 ---
 ### Use the project
